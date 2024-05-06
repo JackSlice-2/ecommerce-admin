@@ -150,7 +150,7 @@ const onSubmit = async (data: ProductFormValues) => {
                         name="images"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Images</FormLabel>
+                                <FormLabel>Add Multiple Images!</FormLabel>
                                 <FormControl>
                                     <ImageUpload 
                                     value={field.value.map((image) => image.url)}

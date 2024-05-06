@@ -27,7 +27,7 @@ import { AlertModal } from "@/components/modals/alert-modal"
 const formSchema = z.object({
   name: z.string().min(1),
   value: z.string().min(4).regex(/^#/, {
-    message: 'String must be valid hex code'
+    message: 'Search Google for "Color Hex Code" to get the correct value.'
   }),
 });
 
@@ -135,10 +135,10 @@ export const ColorForm: React.FC<ColorFormProps> = ({
               name="value"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Value</FormLabel>
+                  <FormLabel>Hexadecimal Value</FormLabel>
                   <FormControl>
                     <div className="flex items-center gap-x-4">
-                    <Input disabled={loading} placeholder="Color value" {...field} />
+                    <Input disabled={loading} placeholder="Color's Hex Code" {...field} />
                     <div 
                     className="boarder p-4 rounded-full"
                     style={{ backgroundColor: field.value }}
