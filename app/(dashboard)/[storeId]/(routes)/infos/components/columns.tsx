@@ -3,8 +3,6 @@
 import { ColumnDef } from "@tanstack/react-table"
 import { CellAction } from "./cell-action"
 
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
 export type InfoColumn = {
   id: string
   name: string
@@ -24,25 +22,25 @@ export const columns: ColumnDef<InfoColumn>[] = [
     header: "Name",
   },{
     accessorKey: "billboardid",
-    header: "billboardid",
+    header: "Billboard ID",
   },{
     accessorKey: "phonenumber",
-    header: "phonenumber",
+    header: "Phone Number",
   },{
     accessorKey: "whatsapp",
-    header: "whatsapp",
+    header: "WhatsApp",
   },{
     accessorKey: "instagram",
-    header: "instagram",
+    header: "Instagram",
   },{
     accessorKey: "facebook",
-    header: "facebook",
+    header: "Facebook",
   },{
     accessorKey: "email",
-    header: "email",
+    header: "E-Mail",
   },{
     accessorKey: "icon",
-    header: "icon",
+    header: "Logo",
   },{
     accessorKey: "createdAt",
     header: "Date",

@@ -3,7 +3,6 @@ import prismadb from "@/lib/prismadb";
 import { InfoClient } from "./components/client";
 import { InfoColumn } from "./components/columns";
 import { format } from "date-fns";
-import { CellAction } from "./components/cell-action";
 
 const InfosPage = async ({
     params
