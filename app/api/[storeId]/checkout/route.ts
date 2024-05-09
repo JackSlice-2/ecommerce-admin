@@ -96,6 +96,9 @@ const session = await stripe.checkout.sessions.create({
     },
 });
 
-console.log(session.url);
+    console.log(session.url);
 
+return NextResponse.json({ url: session.url }, {
+    headers: corsHeaders,
+});
 }
