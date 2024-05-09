@@ -5,7 +5,6 @@ import StoreSwitcher from './store-switcher';
 import { redirect, useParams } from 'next/navigation';
 import prismadb from '@/lib/prismadb';
 import { ThemeToggle } from './theme-toggle';
-import { ComboboxDemo } from './ui/combobox';
 
 const Navbar = async () => {
     const { userId } = auth();

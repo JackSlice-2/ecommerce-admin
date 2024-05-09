@@ -50,7 +50,7 @@ export default function StoreSwitcher({
             className={cn("w-[200px] justify-between", className)}
             >
             <StoreIcon className="mr-2 h-4 w-4" />
-            {currentStore?.label}
+            {currentStore?.label.split('@')[0]}
             <ChevronsUpDown className="ml-auto h-4 w-4 shrink-0 opacity-50" />
             </Button>
             </PopoverTrigger>
@@ -65,7 +65,7 @@ export default function StoreSwitcher({
                                 className="text-sm"
                                 >
                                 <StoreIcon className="mr-2 h04 w-4" />
-                                {store.label}
+                                {store.label.split('@')[0]}
                                 <Check 
                                 className={cn(
                                     "ml-auto h-4 w-4",

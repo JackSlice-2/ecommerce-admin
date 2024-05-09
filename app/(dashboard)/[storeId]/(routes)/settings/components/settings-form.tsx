@@ -27,7 +27,6 @@ import { useOrigin } from "@/hooks/use-origin";
 interface SettingsFormProps {
     initialData: Store;
 }
-
 const formSchema = z.object({
     name: z.string().min(1),
     frontendStoreUrl: z.string().url(),
@@ -39,7 +38,6 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({
     initialData
 }) => {
 
-    const [frontendStoreUrl, setFrontendStoreUrl] = useState(process.env.FRONTEND_STORE_URL);
     const params = useParams();
     const router = useRouter();
     const origin = useOrigin();
@@ -51,36 +49,34 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({
         resolver: zodResolver(formSchema),
         defaultValues: {
            ...initialData,
-            frontendStoreUrl: process.env.FRONTEND_STORE_URL,
         },
     });
 
     const onSubmit = async (data: SettingsFormValues) => {
         try {
             setLoading(true);
-            // Log the submit event
-            console.log("Submit event triggered");
-    
-            // Log the submitted data
             console.log("Submitted data:", data);
-    
-            // Include frontendStoreUrl in the request body
+            
+            // Concatenate storeName and frontendStoreUrl with a hyphen
+            const combinedName = `${data.name}@${data.frontendStoreUrl}`;
+            
+            // Create the requestBody with the combined name
             const requestBody = {
-              ...data,
-                frontendStoreUrl: frontendStoreUrl,
+                name: combinedName,
             };
-            console.log("Request body:", requestBody); // Log the request body
-    
+            
+            console.log("Request body:", requestBody);
+        
             await axios.patch(`/api/stores/${params.storeId}`, requestBody);
             router.refresh();
             toast.success("Store updated");
         } catch (error) {
-            console.error("Error submitting form:", error); // Log any errors
+            console.error("Error submitting form:", error);
             toast.error("Something went wrong");
         } finally {
             setLoading(false);
         }
-    };
+    };    
     
     const onDelete =async () => {
         try {
@@ -94,6 +90,7 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({
             setOpen(false)
         }
     };
+    
 
     return (
     <>
@@ -129,7 +126,7 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({
                             <FormItem>
                                 <FormLabel>Name</FormLabel>
                                 <FormControl>
-                                    <Input disabled={loading} placeholder="Store name" {...field}/>
+                                <Input disabled={loading} placeholder='Enter New Store Name' {...field}/>
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -163,9 +160,11 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({
         description={`${origin}/api/${params.storeId}`}
         variant="public"
         />
+       <ApiAlert
+        title="CURRENT_FRONTEND_URL"
+        description={initialData.name.split('@')[1]}
+        variant="public"
+        />        
     </>
     );
 };
-
-
-
