@@ -120,22 +120,27 @@ useEffect(() => {
           <>
           <div className="flex justify-between pb-2">
           <div>
-            <Button onClick={() => handlePageChange(pagination.pageIndex - 1)}className="mx-2">Previous</Button>
+            <Button onClick={() => handlePageChange(pagination.pageIndex - 1)}
+            disabled={pagination.pageIndex === 0}
+            className="mx-2">Previous</Button>
             </div>
 
             <span>{pagination.pageIndex + 1} / {pageCount}</span>
 
             <div>
-            <Button onClick={() => handlePageChange(pagination.pageIndex + 1)}
+            <Button onClick={() => handlePageChange(pagination.pageIndex + 1)} 
+            disabled={pagination.pageIndex === pageCount - 1}
             className="mx-2">Next</Button>
             </div>
             </div>
 
             <div className="flex justify-between mx-2">
-            <Button onClick={() => handlePageChange(0)} disabled={pagination.pageIndex === 0}>
+            <Button onClick={() => handlePageChange(0)} 
+            disabled={pagination.pageIndex === 0}>
               First
             </Button>
-            <Button onClick={() => handlePageChange(pageCount - 1)} disabled={pagination.pageIndex === pageCount - 1}>
+            <Button onClick={() => handlePageChange(pageCount - 1)} 
+            disabled={pagination.pageIndex === pageCount - 1}>
               Last
             </Button>
             </div>
