@@ -4,7 +4,6 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { useParams, usePathname } from "next/navigation";
 import React from "react";
-import { ComboboxDemo } from "./ui/combobox"
 
 export function MainNav({
     className,
@@ -50,6 +49,11 @@ export function MainNav({
             active: pathname === `/${params.storeId}/products`
         },
         {
+            href: `/${params.storeId}/orders`,
+            label: 'Orders',
+            active: pathname === `/${params.storeId}/orders`,
+        },
+        {
             href: `/${params.storeId}/settings`,
             label: 'Settings',
             active: pathname === `/${params.storeId}/settings`,
@@ -57,7 +61,6 @@ export function MainNav({
     ];
 
     return (
-    <>
         <nav
             className={cn("flex-center items-center space-x-1 lg:space-x-3", className)}
             >
@@ -74,9 +77,5 @@ export function MainNav({
             </Link>
         ))}
         </nav>
-        <div className="pr-5">
-        <ComboboxDemo storeId={params.storeId}/>
-        </div>
-    </>
     )
 };

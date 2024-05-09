@@ -20,6 +20,8 @@ const convertToPayOrderColumn = (paypalPayments: PayPalPayment[]): PayOrderColum
     billingToken: item.billingToken ?? "",
     facilitatorAccessToken: item.facilitatorAccessToken ?? "",
     paymentSource: item.paymentSource ?? "",
+    paymentType: 'PayPal',
+
   }));
 };
 
@@ -53,7 +55,9 @@ const OrdersPage = async ({
       return total + Number(item.product.price)
     }, 0)),
     isPaid: item.isPaid,
-    createdAt: format(item.createdAt, "MMMM do, yyyy")
+    createdAt: format(item.createdAt, "MMMM do, yyyy"),
+    paymentType: 'Stripe'
+
   }));
 
   const paypalPayments: PayPalPayment[] = await prismadb.payPalPayment.findMany({

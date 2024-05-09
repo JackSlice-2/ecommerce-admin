@@ -1,6 +1,7 @@
 "use client"
 
 import { ColumnDef } from "@tanstack/react-table"
+import { CellAction } from "./cell-action";
 // import { CellAction } from "./cell-action";
 
 export type CommonOrderColumn = {
@@ -11,14 +12,13 @@ export type CommonOrderColumn = {
   totalPrice: string;
   products: string;
   createdAt: string;
+  paymentType: 'Stripe' | 'PayPal';
 }
 
 export type OrderColumn = CommonOrderColumn;
 
 export type PayOrderColumn = CommonOrderColumn & {
   id: string;
-  totalPrice: string;
-  createdAt: string;
   orderID: string;
   payerID: string;
   paymentID: string;
@@ -33,16 +33,8 @@ export const columns: ColumnDef<OrderColumn>[] = [
     header: "Products",
   },
   {
-    accessorKey: "totalPrice",
-    header: "Total Price",
-  },
-  {
-    accessorKey: "isPaid",
-    header: "Paid",
-  },
- {
-    accessorKey: "products",
-    header: "Products",
+    accessorKey: "paymentType",
+    header: "PaymentType",
   },
   {
     accessorKey: "phone",
@@ -53,37 +45,15 @@ export const columns: ColumnDef<OrderColumn>[] = [
     header: "Address",
   },
   {
+    accessorKey: "isPaid",
+    header: "Paid",
+  },
+  {
     accessorKey: "totalPrice",
     header: "Total Price",
   },
-  {
-    accessorKey: "orderID",
-    header: "PayPal OrderID",
-  },
-  {
-    accessorKey: "payerID",
-    header: "Paypal PayerID",
-  },
-  {
-    accessorKey: "paymentID",
-    header: "Paypal PaymentID",
-  },
-  {
-    accessorKey: "billingToken",
-    header: "Paypal BillingToken",
-  },{
-    accessorKey: "billingToken",
-    header: "Paypal BillingToken",
-  },{
-    accessorKey: "facilitatorAccessToken",
-    header: "Paypal facilitatorAccessToken",
-  },
-  // {
-  //   id: "actions",
-  //   cell: ({ row }) => <CellAction data={row.original} />
-  // },
+   {
+     id: "actions",
+     cell: ({ row }) => <CellAction data={row.original} />
+   },
 ]
-
-// PROBLEM
-
-// CELL ACTION MUST KNOW WHEN IT IS SGTRIPE OR PAYPAL {PAYMENT< 3rd DATABASE NEEDED} PAYPALORDERS, STRIPEORDERS, ALLORDERS
