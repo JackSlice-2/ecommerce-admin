@@ -29,7 +29,7 @@ export const InfoClient: React.FC<InfoClientProps> = ({
             {data.length === 0 && (
                 <Button onClick={() => router.push(`/${params.storeId}/infos/new`)}>
                     <Plus className="mr-2 h-4 w-4"/>
-                    Add new
+                    Create Info
                 </Button>
             )}
         </div>
