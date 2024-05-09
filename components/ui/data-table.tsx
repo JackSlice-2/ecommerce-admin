@@ -96,21 +96,27 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
+      
       <div className="flex items-center py-4 justify-between">
-        <Button 
-        onClick={() => setPageIndex(0)}
-        disabled={pagination.pageIndex === 0}>First</Button>
-        <Button 
-        onClick={previousPage}>Previous</Button>
-        
-        <span>{pagination.pageIndex + 1} / {pageCount}</span>
+        {pageCount > 1 && (
+          <>
+            <Button 
+              onClick={() => setPageIndex(0)}
+              disabled={pagination.pageIndex === 0}>First</Button>
+            <Button 
+              onClick={previousPage}>Previous</Button>
+            
+            <span>{pagination.pageIndex + 1} / {pageCount}</span>
 
-        <Button 
-        onClick={nextPage}>Next</Button>
-        <Button 
-        onClick={() => setPageIndex(pageCount - 1)}
-        disabled={pagination.pageIndex === pageCount - 1}>Last</Button>
+            <Button 
+              onClick={nextPage}>Next</Button>
+            <Button 
+              onClick={() => setPageIndex(pageCount - 1)}
+              disabled={pagination.pageIndex === pageCount - 1}>Last</Button>
+          </>
+        )}
       </div>
+
     </div>
   )
 }
