@@ -30,6 +30,7 @@ interface SettingsFormProps {
 
 const formSchema = z.object({
     name: z.string().min(1),
+    frontendStoreUrl: z.string().url(),
 });
 
 type SettingsFormValues = z.infer<typeof formSchema>;
@@ -37,6 +38,8 @@ type SettingsFormValues = z.infer<typeof formSchema>;
 export const SettingsForm: React.FC<SettingsFormProps> = ({
     initialData
 }) => {
+
+    const [frontendStoreUrl, setFrontendStoreUrl] = useState(process.env.FRONTEND_STORE_URL);
     const params = useParams();
     const router = useRouter();
     const origin = useOrigin();
@@ -46,22 +49,39 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({
 
     const form = useForm<SettingsFormValues>({
         resolver: zodResolver(formSchema),
-        defaultValues: initialData
+        defaultValues: {
+           ...initialData,
+            frontendStoreUrl: process.env.FRONTEND_STORE_URL,
+        },
     });
 
     const onSubmit = async (data: SettingsFormValues) => {
         try {
             setLoading(true);
-            await axios.patch(`/api/stores/${params.storeId}`, data);
+            // Log the submit event
+            console.log("Submit event triggered");
+    
+            // Log the submitted data
+            console.log("Submitted data:", data);
+    
+            // Include frontendStoreUrl in the request body
+            const requestBody = {
+              ...data,
+                frontendStoreUrl: frontendStoreUrl,
+            };
+            console.log("Request body:", requestBody); // Log the request body
+    
+            await axios.patch(`/api/stores/${params.storeId}`, requestBody);
             router.refresh();
-            toast.success("Store updated")
+            toast.success("Store updated");
         } catch (error) {
-        toast.error("Something went wrong");
+            console.error("Error submitting form:", error); // Log any errors
+            toast.error("Something went wrong");
         } finally {
             setLoading(false);
         }
     };
-
+    
     const onDelete =async () => {
         try {
             setLoading(true)
@@ -115,6 +135,19 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({
                             </FormItem>
                         )}
                     />
+                <FormField
+                    control={form.control}
+                    name="frontendStoreUrl"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Frontend Store URL</FormLabel>
+                            <FormControl>
+                                <Input disabled={loading} placeholder="Enter Frontend Store URL" {...field}/>
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
                 </div>
                 <Button 
                 disabled={loading} 
@@ -133,3 +166,6 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({
     </>
     );
 };
+
+
+

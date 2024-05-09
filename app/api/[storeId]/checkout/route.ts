@@ -17,7 +17,8 @@ export async function POST(
     req: Request,
     { params }: { params: { storeId: string } }
 ) {
-    const { productIds } = await req.json();
+    const { productIds, frontendStoreUrl } = await req.json();
+    
     
     if (!productIds || productIds.length === 0) {
         return new NextResponse("Product Ids are required", { status:400 });
@@ -61,7 +62,8 @@ export async function POST(
             }
         }
     });
-
+    
+    
     const session = await stripe.checkout.sessions.create({
         line_items,
         mode: "payment",
@@ -69,14 +71,13 @@ export async function POST(
         phone_number_collection: {
             enabled: true
         },
-        success_url: `${process.env.FRONTEND_STORE_URL}/cart?success=1`,
-        cancel_url: `${process.env.FRONTEND_STORE_URL}/cart?cancel=1`,
+        success_url: `${frontendStoreUrl}/cart?success=1`,
+        cancel_url: `${frontendStoreUrl}/cart?cancel=1`,
         metadata: {
             orderId: order.id
         }
     });
 
-    
     return NextResponse.json({ url: session.url }, {
         headers: corsHeaders
     });
