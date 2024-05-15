@@ -8,6 +8,7 @@ import { useParams, useRouter } from "next/navigation"
 import { BillboardColumn, columns } from "./columns"
 import { DataTable } from "@/components/ui/data-table"
 import { ApiList } from "@/components/ui/api-list"
+import { useMemo } from "react"
 
 interface BillboardClientProps {
     data: BillboardColumn[]
@@ -18,6 +19,10 @@ export const BillboardClient: React.FC<BillboardClientProps> = ({
 }) => {
     const router = useRouter();
     const params = useParams();
+
+    const mainData = useMemo(() => data.filter(item => item.isMain), [data]);
+    const otherData = useMemo(() => data.filter(item =>!item.isMain), [data]);
+
     return (
         <>
         <div className="flex items-center justify-between">
@@ -31,7 +36,14 @@ export const BillboardClient: React.FC<BillboardClientProps> = ({
             </Button>
         </div>
         <Separator />
-        <DataTable searchKey="label" columns={columns} data={data}/>
+        <div className="text-2xl font-bold">
+            Main Billboard
+        </div>
+        <DataTable searchKey="label"  columns={columns} data={mainData} />
+        <div className="text-2xl font-bold">
+            Category Billboards
+        </div>
+        <DataTable searchKey="label" columns={columns} data={otherData} />
         <Heading title="API" description="API calls for Billboards" />
         <Separator />
         <ApiList 

@@ -22,9 +22,6 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Button } from "./button"
-import { Select } from "./select"
-import StoreSwitcher from "../store-switcher"
-import { DropdownMenu } from "./dropdown-menu"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -61,7 +58,6 @@ const handlePageChange = (newPageIndex: number) => {
   }));
 };
 useEffect(() => {
-  // Example side effect: fetch new data based on the current page
   console.log(`Fetching data for page ${pagination.pageIndex + 1}`);
 }, [pagination.pageIndex])
 

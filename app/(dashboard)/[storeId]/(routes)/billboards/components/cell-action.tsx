@@ -16,10 +16,12 @@ import { AlertModal } from "@/components/modals/alert-modal";
 
 interface CellActionProps {
     data: BillboardColumn;
+    isMainBillboard?: boolean;
 };
 
 export const CellAction: React.FC<CellActionProps> = ({
-    data
+    data,
+    isMainBillboard = false,
 }) => {
     const router = useRouter();
     const params = useParams();
@@ -68,14 +70,18 @@ export const CellAction: React.FC<CellActionProps> = ({
                     <Edit className="mr-2 h-4 w-4" />
                     Update
                 </DropdownMenuItem>
+                {isMainBillboard && (
                 <DropdownMenuItem onClick={() => onCopy(data.id)}>
                     <Copy className="mr-2 h-4 w-4" />
                     Copy Id
                 </DropdownMenuItem>
+                )}
+                {!isMainBillboard && (
                 <DropdownMenuItem onClick={() => setOpen(true)}>
                     <Trash className="mr-2 h-4 w-4" />
                     Delete
                 </DropdownMenuItem>
+                )}
             </DropdownMenuContent>
         </DropdownMenu>
         </>

@@ -25,7 +25,8 @@ import ImageUpload from "@/components/ui/image-upload";
 
 const formSchema = z.object({
     label: z.string().min(1),
-    imageUrl: z.string().min(1)
+    imageUrl: z.string().min(1),
+    isMain: z.boolean().default(false)
 });
 
 type BillboardFormValues = z.infer<typeof formSchema>;
@@ -34,8 +35,9 @@ interface BillboardFormProps {
     initialData: Billboard | null;
 }
 
-export const BillboardForm: React.FC<BillboardFormProps> = ({
-    initialData
+export const BillboardForm: React.FC<BillboardFormProps & { isMain?: boolean }> = ({
+    initialData,
+    isMain = initialData?.isMain,
 }) => {
     const params = useParams();
     const router = useRouter();
@@ -53,11 +55,13 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
         resolver: zodResolver(formSchema),
         defaultValues: initialData || {
             label: '',
-            imageUrl: ''
+            imageUrl: '',
+            isMain: false
         }
     });
 
 const onSubmit = async (data: BillboardFormValues) => {
+    console.log(data);
     try {
         setLoading(true);
         if (initialData) {
@@ -103,7 +107,7 @@ const onSubmit = async (data: BillboardFormValues) => {
             title={title}
             description={description}
             />
-            {initialData && (
+        {!isMain && initialData && (
             <Button
             disabled={loading}
             variant="destructive"
