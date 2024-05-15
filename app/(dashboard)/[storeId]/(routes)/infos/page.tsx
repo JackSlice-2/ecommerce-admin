@@ -28,6 +28,14 @@ const InfosPage = async ({
         instagram: item.instagram,
         facebook: item.facebook,
         email: item.email,
+        visa: item.visa,
+        mastercard: item.mastercard,
+        amex: item.amex,
+        hipercard: item.hipercard,
+        elo: item.elo,
+        pix: item.pix,
+        paypal: item.paypal,
+        stripe: item.stripe,
         createdAt: format(item.createdAt, "MMMM do, yyyy")
     }));
 

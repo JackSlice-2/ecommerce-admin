@@ -22,6 +22,7 @@ import axios from "axios";
 import { useParams, useRouter } from "next/navigation";
 import { AlertModal } from "@/components/modals/alert-modal";
 import ImageUpload from "@/components/ui/image-upload";
+import { BillboardColumn } from "../../components/columns";
 
 const formSchema = z.object({
     label: z.string().min(1),
@@ -33,6 +34,7 @@ type BillboardFormValues = z.infer<typeof formSchema>;
 
 interface BillboardFormProps {
     initialData: Billboard | null;
+    id: string;
 }
 
 export const BillboardForm: React.FC<BillboardFormProps & { isMain?: boolean }> = ({
@@ -60,24 +62,44 @@ export const BillboardForm: React.FC<BillboardFormProps & { isMain?: boolean }> 
         }
     });
 
-const onSubmit = async (data: BillboardFormValues) => {
-    console.log(data);
-    try {
-        setLoading(true);
-        if (initialData) {
-            await axios.patch(`/api/${params.storeId}/billboards/${params.billboardId}`, data);
-        } else {
-            await axios.post(`/api/${params.storeId}/billboards`, data);
+    const onSubmit = async (data: BillboardFormValues) => {
+        console.log(data);
+        try {
+            setLoading(true);
+            
+            // Fetch existing billboards
+            const response = await axios.get(`/api/${params.storeId}/billboards`);
+            const existingBillboards = response.data;
+        
+            interface Billboard {
+                id: string;
+            }
+        
+            // Use the interface to annotate the billboard parameter
+            let isMain = false;
+            if (!existingBillboards.some((billboard: Billboard) => billboard.id!== params.billboardId)) {
+                isMain = true; // Set isMain to true if there are no other billboards
+            }
+    
+            // Update data object with isMain value
+            data.isMain = isMain;
+        
+            if (initialData) {
+                await axios.patch(`/api/${params.storeId}/billboards/${params.billboardId}`, data);
+            } else {
+                await axios.post(`/api/${params.storeId}/billboards`, data);
+            }
+            router.refresh();
+            router.push(`/${params.storeId}/billboards`);
+            toast.success(toastMessage);
+        } catch (error) {
+            toast.error("Something went wrong");
+        } finally {
+            setLoading(false);
         }
-        router.refresh();
-        router.push(`/${params.storeId}/billboards`);
-        toast.success(toastMessage);
-    } catch (error) {
-        toast.error("Something went wrong");
-    } finally {
-        setLoading(false);
-    }
-};
+    };
+    
+    
 
     const onDelete = async () => {
         try {

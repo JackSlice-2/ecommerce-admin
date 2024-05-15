@@ -157,6 +157,14 @@ model Info {
   instagram String
   facebook String
   email String
+  visa Boolean @default(false)
+  mastercard Boolean @default(false)
+  amex Boolean @default(false)
+  hipercard Boolean @default(false)
+  elo Boolean @default(false)
+  pix Boolean @default(false)
+  paypal Boolean @default(false)
+  stripe Boolean @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

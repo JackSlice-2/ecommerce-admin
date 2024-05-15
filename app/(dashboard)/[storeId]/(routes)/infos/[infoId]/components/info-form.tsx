@@ -31,7 +31,15 @@ const formSchema = z.object({
     whatsapp: z.string(),
     instagram: z.string(),
     facebook: z.string(),
-    email: z.string()
+    email: z.string(),
+    visa: z.boolean().default(false),
+    mastercard: z.boolean().default(false),
+    amex: z.boolean().default(false),
+    hipercard: z.boolean().default(false),
+    elo: z.boolean().default(false),
+    pix: z.boolean().default(false),
+    paypal: z.boolean().default(false),
+    stripe: z.boolean().default(false),
 });
 
 type InfoFormValues = z.infer<typeof formSchema>;
@@ -66,6 +74,14 @@ export const InfoForm: React.FC<InfoFormProps> = ({
             instagram: '',
             facebook: '',
             email: '',
+            visa: false,
+            mastercard: false,
+            amex: false,
+            hipercard: false,
+            elo: false,
+            pix: false,
+            paypal: false,
+            stripe: false
         }
     });
 
