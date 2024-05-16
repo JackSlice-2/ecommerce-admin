@@ -23,6 +23,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/api/[storeId]/paypal/route.jsx", "app/api/[storeId]/paypal/route.js", "components/ui/combobox.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/api/[storeId]/paypal/route.jsx", "app/api/[storeId]/paypal/route.js", "components/ui/OrderButtons.jsx"],
   "exclude": ["node_modules"]
 }

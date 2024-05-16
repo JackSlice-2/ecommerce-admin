@@ -4,7 +4,7 @@ import { Heading } from "@/components/ui/heading";
 import { Separator } from "@/components/ui/separator";
 import { PayOrderColumn, paycolumns } from "./columns";
 import { DataTable } from "@/components/ui/data-table";
-import { ComboboxDemo } from "@/components/ui/combobox";
+import OrderButtons from '@/components/ui/OrderButtons';
 import { useParams } from "next/navigation";
 
 interface OrderClientProps {
@@ -24,7 +24,7 @@ export const OrderClient: React.FC<OrderClientProps> = ({
       />
       <Separator />
       <div className="pr-5">
-          <ComboboxDemo storeId={params.storeId}/>
+          <OrderButtons storeId={params.storeId}/>
       </div>
       <DataTable
         searchKey="products"

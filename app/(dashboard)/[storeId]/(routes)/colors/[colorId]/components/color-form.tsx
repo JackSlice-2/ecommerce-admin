@@ -26,7 +26,7 @@ import { AlertModal } from "@/components/modals/alert-modal"
 
 const formSchema = z.object({
   name: z.string().min(1),
-  value: z.string().min(4).regex(/^#/, {
+  value: z.string().min(3).regex(/^#/, {
     message: 'Search Google for "Color Hex Code" to get the correct value.'
   }),
 });

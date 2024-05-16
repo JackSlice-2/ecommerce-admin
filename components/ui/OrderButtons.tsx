@@ -17,7 +17,13 @@ const orders = [
   },
 ];
 
-export function ComboboxDemo({ storeId }) {
+type OrderButtonsProps = {  
+  storeId: string | string[];
+};
+
+const OrderButtons: React.FC<OrderButtonsProps> = ({ 
+  storeId 
+}) => {
 
   return (
     <>
@@ -39,3 +45,4 @@ export function ComboboxDemo({ storeId }) {
 
   );
 }
+export default OrderButtons;
