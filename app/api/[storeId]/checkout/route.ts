@@ -23,7 +23,7 @@ async function getStoreName(storeId: any) {
 }
 
 export async function POST(req: Request, { params }: { params: { storeId: string } }) {
-    const { productIds, frontendStoreUrl } = await req.json();
+    const { productIds } = await req.json();
 
     if (!productIds || productIds.length === 0) {
         return new NextResponse("Product Ids are required", { status: 400 });
@@ -81,7 +81,6 @@ if (!storeName) {
     return new NextResponse("Store not found", { status: 404 });
 }
 
-// Create a checkout session
 const session = await stripe.checkout.sessions.create({
     line_items,
     mode: "payment",

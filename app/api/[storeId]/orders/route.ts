@@ -8,7 +8,6 @@ export async function POST(
 ) {
     try {
         const { userId } = auth();
-        const body = await req.json();
 
         // Rest of the validation and checks (similar to the existing code)
 

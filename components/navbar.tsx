@@ -2,7 +2,7 @@ import { UserButton, auth } from '@clerk/nextjs';
 import React from 'react'
 import { MainNav } from './main-nav';
 import StoreSwitcher from './store-switcher';
-import { redirect, useParams } from 'next/navigation';
+import { redirect } from 'next/navigation';
 import prismadb from '@/lib/prismadb';
 import { ThemeToggle } from './theme-toggle';
 

@@ -21,7 +21,6 @@ import axios from "axios";
 import { useParams, useRouter } from "next/navigation";
 import { AlertModal } from "@/components/modals/alert-modal";
 import ImageUpload from "@/components/ui/image-upload";
-import { BillboardColumn } from "../../components/columns";
 
 const formSchema = z.object({
     label: z.string().min(1),
