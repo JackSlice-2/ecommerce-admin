@@ -57,12 +57,9 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({
             setLoading(true);
             console.log("Submitted data:", data);
             
-            // Concatenate storeName and frontendStoreUrl with a hyphen
-            const combinedName = `${data.name}@${data.frontendStoreUrl}`;
-            
-            // Create the requestBody with the combined name
             const requestBody = {
-                name: combinedName,
+                name: data.name,
+                frontendStoreUrl: data.frontendStoreUrl,
             };
             
             console.log("Request body:", requestBody);
@@ -162,7 +159,7 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({
         />
        <ApiAlert
         title="CURRENT_FRONTEND_URL"
-        description={initialData.name.split('@')[1]}
+        description={initialData?.frontendStoreUrl}
         variant="public"
         />        
     </>

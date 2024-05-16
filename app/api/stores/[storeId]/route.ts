@@ -10,14 +10,14 @@ export async function PATCH(
     const { userId } = auth();
     const body =await req.json();
 
-    const { name } = body;
+    const { name, frontendStoreUrl } = body;
 
     if (!userId) {
         return new NextResponse("Unauthenticated", { status: 401 });
     }
 
-    if (!name) {
-        return new NextResponse("Name is required", { status: 400 });
+    if (!name || !frontendStoreUrl) {
+        return new NextResponse("Name and Url are required", { status: 400 });
     }
 
     if (!params.storeId) {
@@ -30,7 +30,8 @@ export async function PATCH(
             userId
         },
         data: {
-            name
+            name,
+            frontendStoreUrl
         }
     });
 
