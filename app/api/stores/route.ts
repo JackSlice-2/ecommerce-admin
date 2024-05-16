@@ -9,7 +9,7 @@ export async function POST(
         const { userId } = auth();
         const body = await req.json();
 
-        const { name } = body;
+        const { name, frontendStoreUrl } = body;
 
         if (!userId) {
             return new NextResponse("Unauthorized", { status: 401 });
@@ -19,10 +19,15 @@ export async function POST(
             return new NextResponse("Name is required", { status: 400 });
         }
 
+        if (!frontendStoreUrl) {
+            return new NextResponse("Frontend Store URL is required", { status: 400 });
+        }
+
         const store = await prismadb.store.create({
             data: {
                 name,
                 userId,
+                frontendStoreUrl,
             }
         });
         return NextResponse.json(store);
