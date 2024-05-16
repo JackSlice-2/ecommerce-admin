@@ -63,27 +63,31 @@ export const BillboardForm: React.FC<BillboardFormProps & { isMain?: boolean }> 
         console.log(data);
         try {
             setLoading(true);
-            
-            // Fetch existing billboards
-            const response = await axios.get(`/api/${params.storeId}/billboards`);
-            const existingBillboards = response.data;
-        
-            interface Billboard {
-                id: string;
-            }
-        
-            // Use the interface to annotate the billboard parameter
-            let isMain = false;
-            if (!existingBillboards.some((billboard: Billboard) => billboard.id!== params.billboardId)) {
-                isMain = true; // Set isMain to true if there are no other billboards
-            }
     
-            // Update data object with isMain value
-            data.isMain = isMain;
-        
+            // Directly use the isMain value from initialData for updates
             if (initialData) {
-                await axios.patch(`/api/${params.storeId}/billboards/${params.billboardId}`, data);
+                // Pass the isMain value from initialData without modification
+                await axios.patch(`/api/${params.storeId}/billboards/${params.billboardId}`, {
+                   ...data,
+                    isMain: initialData.isMain // Ensure isMain remains unchanged
+                });
             } else {
+                // For new entries, proceed as before
+                const response = await axios.get(`/api/${params.storeId}/billboards`);
+                const existingBillboards = response.data;
+    
+                interface Billboard {
+                    id: string;
+                }
+    
+                let isMain = false;
+                if (!existingBillboards.some((billboard: Billboard) => billboard.id!== params.billboardId)) {
+                    isMain = true; // Set isMain to true if there are no other billboards
+                }
+    
+                // Update data object with isMain value
+                data.isMain = isMain;
+    
                 await axios.post(`/api/${params.storeId}/billboards`, data);
             }
             router.refresh();
@@ -95,6 +99,7 @@ export const BillboardForm: React.FC<BillboardFormProps & { isMain?: boolean }> 
             setLoading(false);
         }
     };
+    
     
     
 
