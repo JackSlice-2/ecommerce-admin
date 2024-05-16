@@ -12,7 +12,7 @@ import { useForm } from "react-hook-form";
 import { Form, 
     FormControl, 
     FormField, 
-    FormItem, 
+    FormItem,
     FormLabel, 
     FormMessage 
 } from "@/components/ui/form";
@@ -28,7 +28,7 @@ interface SettingsFormProps {
 }
 const formSchema = z.object({
     name: z.string().min(1),
-    frontendStoreUrl: z.string().url()
+    frontendStoreUrl: z.string().min(1)
 });
 
 type SettingsFormValues = z.infer<typeof formSchema>;
