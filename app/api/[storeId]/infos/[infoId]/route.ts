@@ -39,7 +39,16 @@ export async function PATCH(
         whatsapp,
         instagram,
         facebook,
-        email, } = body;
+        email,
+        visa,
+        mastercard,
+        amex,
+        hipercard,
+        elo,
+        pix,
+        paypal,
+        stripe
+     } = body;
 
     if (!userId) {
         return new NextResponse("Unauthenticated", { status: 401 });
@@ -77,6 +86,14 @@ export async function PATCH(
             instagram,
             facebook,
             email,
+            visa,
+            mastercard,
+            amex,
+            hipercard,
+            elo,
+            pix,
+            paypal,
+            stripe
         }
     });
 

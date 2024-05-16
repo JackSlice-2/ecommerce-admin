@@ -2,6 +2,7 @@
 
 import { ColumnDef } from "@tanstack/react-table"
 import { CellAction } from "./cell-action"
+import Image from "next/image"
 
 export type InfoColumn = {
   id: string
@@ -26,9 +27,24 @@ export type InfoColumn = {
 
 export const columns: ColumnDef<InfoColumn>[] = [
   {
+    id: "actions",
+    header: "Edit",
+    cell: ({ row }) => <CellAction data={row.original} />
+  },
+  {
     accessorKey: "name",
     header: "Name",
-  },{
+  },
+  {
+    accessorKey: "icon",
+    header: "Logo",
+    cell: ({ row }) => (
+      <div style={{ width: "50px", height: "50px" }}>
+        <Image src={row.original.icon} alt="Icon" width={50} height={50} />
+      </div>
+    ),
+  },
+  {
     accessorKey: "billboardid",
     header: "Billboard ID",
   },{
@@ -40,15 +56,14 @@ export const columns: ColumnDef<InfoColumn>[] = [
   },{
     accessorKey: "instagram",
     header: "Instagram",
-  },{
+  },
+  {
     accessorKey: "facebook",
     header: "Facebook",
-  },{
+  },
+  {
     accessorKey: "email",
     header: "E-Mail",
-  },{
-    accessorKey: "icon",
-    header: "Logo",
   },
   {
     accessorKey: "visa",
@@ -85,8 +100,5 @@ export const columns: ColumnDef<InfoColumn>[] = [
   {
     accessorKey: "createdAt",
     header: "Date",
-  },{
-    id: "actions",
-    cell: ({ row }) => <CellAction data={row.original}/>
-  },
+  }
 ]

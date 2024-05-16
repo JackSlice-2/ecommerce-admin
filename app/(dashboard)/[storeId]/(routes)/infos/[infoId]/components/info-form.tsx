@@ -22,6 +22,8 @@ import axios from "axios";
 import { useParams, useRouter } from "next/navigation";
 import { AlertModal } from "@/components/modals/alert-modal";
 import ImageUpload from "@/components/ui/image-upload";
+import { Checkbox } from "@/components/ui/checkbox";
+import { InputTexts, paymentMethods } from "./data";
 
 const formSchema = z.object({
     name: z.string().min(1),
@@ -87,6 +89,7 @@ export const InfoForm: React.FC<InfoFormProps> = ({
 
 const onSubmit = async (data: InfoFormValues) => {
     try {
+        console.log(data);
         setLoading(true);
         if (initialData) {
             await axios.patch(`/api/${params.storeId}/infos/${params.infoId}`, data);
@@ -165,97 +168,49 @@ const onSubmit = async (data: InfoFormValues) => {
                             )}
                         />
                     <div className="grid grid-cols-3 gap-8">
+                            {InputTexts.map((input) => (
+                                <FormField
+                                    key={input.name}
+                                    control={form.control}
+                                    name={input.name as keyof InfoFormValues}
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>{input.label}</FormLabel>
+                                            <FormControl>
+                                            <Input
+                                                disabled={loading}
+                                                placeholder={input.placeholder}
+                                                value={field.value.toString()}
+                                                onChange={(e) => field.onChange(e.target.value)} 
+                                            />
+
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                            ))}
+                        </div>
+                        <div className="col-span-3">
+                    {paymentMethods.map((method) => (
                         <FormField
+                            key={method.name}
                             control={form.control}
-                            name="name"
+                            name={method.name as keyof InfoFormValues}
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Store name</FormLabel>
+                                    <FormLabel>{method.label}</FormLabel>
                                     <FormControl>
-                                        <Input disabled={loading} placeholder="Your Store`s Name" {...field}/>
+                                        <Checkbox 
+                                            checked={field.value as boolean}
+                                            onCheckedChange={field.onChange}
+                                        />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
                             )}
                         />
-                        <FormField
-                            control={form.control}
-                            name="billboardid"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Billboard Id</FormLabel>
-                                    <FormControl>
-                                        <Input disabled={loading} placeholder="Main Billboard ID" {...field}/>
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="phonenumber"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Phone Number</FormLabel>
-                                    <FormControl>
-                                        <Input disabled={loading} placeholder="+55 5 5555-5555" {...field}/>
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="whatsapp"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>WhatsApp Link</FormLabel>
-                                    <FormControl>
-                                        <Input disabled={loading} placeholder="Paste Link Here..." {...field}/>
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="instagram"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Instagram Page</FormLabel>
-                                    <FormControl>
-                                        <Input disabled={loading} placeholder="Paste Link Here..." {...field}/>
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="facebook"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Facebook</FormLabel>
-                                    <FormControl>
-                                        <Input disabled={loading} placeholder="Paste Link Here..." {...field}/>
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="email"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>E-Mail Address</FormLabel>
-                                    <FormControl>
-                                        <Input disabled={loading} placeholder="example@afrotech.com" {...field}/>
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
+                    ))}
                     </div>
                     <Button 
                     disabled={loading} 

@@ -18,7 +18,16 @@ export async function POST(
             whatsapp,
             instagram,
             facebook,
-            email, } = body;
+            email,
+            visa,
+            mastercard,
+            amex,
+            hipercard,
+            elo,
+            pix,
+            paypal,
+            stripe
+        } = body;
 
         if (!userId) {
             return new NextResponse("Unauthenticated", { status: 401 });
@@ -55,6 +64,14 @@ export async function POST(
                 instagram,
                 facebook,
                 email,
+                visa,
+                mastercard,
+                amex,
+                hipercard,
+                elo,
+                pix,
+                paypal,
+                stripe,
                 storeId: params.storeId
             }
         });
