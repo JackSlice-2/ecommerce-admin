@@ -28,7 +28,7 @@ interface SettingsFormProps {
 }
 const formSchema = z.object({
     name: z.string().min(1),
-    frontendStoreUrl: z.string().nullable().url(),
+    frontendStoreUrl: z.string().min(1),
 });
 
 type SettingsFormValues = z.infer<typeof formSchema>;
