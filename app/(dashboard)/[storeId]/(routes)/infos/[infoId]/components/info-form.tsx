@@ -26,7 +26,6 @@ import { InputTexts, paymentMethods } from "./data";
 
 const formSchema = z.object({
     name: z.string().min(1),
-    billboardid: z.string(),
     icon: z.string(),
     phonenumber: z.string(),
     whatsapp: z.string(),
@@ -69,7 +68,6 @@ export const InfoForm: React.FC<InfoFormProps> = ({
         defaultValues: initialData || {
             name: '',
             icon: '',
-            billboardid: '',
             phonenumber: '',
             whatsapp: '',
             instagram: '',
@@ -190,26 +188,30 @@ const onSubmit = async (data: InfoFormValues) => {
                                 />
                             ))}
                         </div>
-                        <div className="col-span-3">
-                    {paymentMethods.map((method) => (
-                        <FormField
-                            key={method.name}
-                            control={form.control}
-                            name={method.name as keyof InfoFormValues}
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>{method.label}</FormLabel>
-                                    <FormControl>
-                                        <Checkbox 
-                                            checked={field.value as boolean}
-                                            onCheckedChange={field.onChange}
-                                        />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                    ))}
+                        <div className="flex gap-3 justify-between">
+                        {paymentMethods.map((method) => (
+                            <FormField
+                                key={method.name}
+                                control={form.control}
+                                name={method.name as keyof InfoFormValues}
+                                render={({ field }) => (
+                                    <FormItem className="text-center">
+                                        <FormLabel>{method.label}</FormLabel>
+                                        <FormControl>
+                                            <div className="flex justify-center items-center">
+                                                <Checkbox
+                                                    checked={field.value as boolean}
+                                                    onCheckedChange={field.onChange}
+                                                    className="mx-3 rounded-full p-3 justify-center items-center"
+                                                />
+                                            </div>
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                        ))}
+
                     </div>
                     <Button 
                     disabled={loading} 

@@ -22,6 +22,8 @@ import {
 } from "@/components/ui/form"
 import { Heading } from "@/components/ui/heading"
 import { AlertModal } from "@/components/modals/alert-modal"
+import ColorHexTable from "./ColorHexTable"
+import { hexCodes } from "./data"
 
 const formSchema = z.object({
   name: z.string().min(1),
@@ -49,6 +51,11 @@ export const ColorForm: React.FC<ColorFormProps> = ({
   const description = initialData ? 'Edit a color.' : 'Add a new color';
   const toastMessage = initialData ? 'Color updated.' : 'Color created.';
   const action = initialData ? 'Save changes' : 'Create';
+  
+  const onSelectHexCode = (hexCode: string, name: string) => {
+    form.setValue("value", hexCode);
+    form.setValue("name", name);
+  };
 
   const form = useForm<ColorFormValues>({
     resolver: zodResolver(formSchema),
@@ -67,7 +74,6 @@ export const ColorForm: React.FC<ColorFormProps> = ({
         await axios.post(`/api/${params.storeId}/colors`, data);
       }
       router.refresh();
-      router.push(`/${params.storeId}/colors`);
       toast.success(toastMessage);
     } catch (error: any) {
       toast.error('Something went wrong.');
@@ -154,6 +160,7 @@ export const ColorForm: React.FC<ColorFormProps> = ({
           </Button>
         </form>
       </Form>
+      <ColorHexTable hexCodes={hexCodes} onSelectHexCode={onSelectHexCode} />
     </>
   );
 };

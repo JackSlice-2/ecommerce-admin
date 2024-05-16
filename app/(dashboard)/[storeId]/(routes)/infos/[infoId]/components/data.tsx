@@ -23,15 +23,7 @@ export const paymentMethods = [
     {
         name: "pix",
         label: "Pix",
-    },
-    {
-        name: "paypal",
-        label: "Paypal",
-    },
-    {
-        name: "stripe",
-        label: "Stripe",
-    },
+    }
 ]
 
 export const InputTexts = [
@@ -39,11 +31,6 @@ export const InputTexts = [
         name: "name",
         label: "Store Name",
         placeholder: "Your Store`s Name",
-    },
-    {
-        name: "billboardid",
-        label: "Billboard ID",
-        placeholder: "Main Billboard ID",
     },
     {
         name: "phonenumber",

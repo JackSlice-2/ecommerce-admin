@@ -132,7 +132,8 @@ export const SizeForm: React.FC<SizeFormProps> = ({
               name="value"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Size Number/Value</FormLabel>
+                  <FormLabel>Size Number/Weight/Volume..
+                  </FormLabel>
                   <FormControl>
                     <Input disabled={loading} placeholder="15" {...field} />
                   </FormControl>

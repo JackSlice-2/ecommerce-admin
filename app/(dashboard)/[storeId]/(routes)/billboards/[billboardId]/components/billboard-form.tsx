@@ -151,7 +151,7 @@ export const BillboardForm: React.FC<BillboardFormProps & { isMain?: boolean }> 
                         name="imageUrl"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Backround Image</FormLabel>
+                                <FormLabel>Main Backround Image</FormLabel>
                                 <FormControl>
                                     <ImageUpload 
                                     value={field.value ? [field.value] : []}
@@ -170,9 +170,9 @@ export const BillboardForm: React.FC<BillboardFormProps & { isMain?: boolean }> 
                         name="label"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Label</FormLabel>
+                                <FormLabel>Headline</FormLabel>
                                 <FormControl>
-                                    <Input disabled={loading} placeholder="Billboard label" {...field}/>
+                                    <Input disabled={loading} placeholder="This Will Appear Over the Image" {...field}/>
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
