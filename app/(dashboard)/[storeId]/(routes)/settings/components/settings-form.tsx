@@ -28,10 +28,11 @@ interface SettingsFormProps {
 }
 const formSchema = z.object({
     name: z.string().min(1),
-    frontendStoreUrl: z.string().min(1),
+    frontendStoreUrl: z.string().url()
 });
 
 type SettingsFormValues = z.infer<typeof formSchema>;
+
 
 export const SettingsForm: React.FC<SettingsFormProps> = ({
     initialData
@@ -48,6 +49,7 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({
         resolver: zodResolver(formSchema),
         defaultValues: {
            ...initialData,
+           frontendStoreUrl: initialData.frontendStoreUrl || ""
         },
     });
 
