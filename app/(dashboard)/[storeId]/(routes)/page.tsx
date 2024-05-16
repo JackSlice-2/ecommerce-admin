@@ -5,7 +5,6 @@ import { getTotalRevenue } from "@/actions/get-total-revenue";
 import { Overview } from "@/components/overview";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Heading } from "@/components/ui/heading";
-import { Separator } from "@/components/ui/separator";
 import { formatter } from "@/lib/utils";
 import { CreditCard, DollarSign, Package } from "lucide-react";
 import React from "react";
@@ -26,7 +25,7 @@ const DashboardPage: React.FC<DashboardPageProps> =async ({
         <div className="flex-col">
             <div className="flex-1 space-y-4 p-8 pt-6">
                 <Heading title="Dashboard" description="Overview of your store" />
-                <Separator />
+                <hr />
                 <div className="grid gap-4 grid-cols-3">
                     <Card>
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">

@@ -1,7 +1,6 @@
 'use client'
 
 import { Heading } from "@/components/ui/heading";
-import { Separator } from "@/components/ui/separator";
 import { PayOrderColumn, paycolumns } from "./columns";
 import { DataTable } from "@/components/ui/data-table";
 import OrderButtons from '@/components/ui/OrderButtons';
@@ -22,7 +21,7 @@ export const OrderClient: React.FC<OrderClientProps> = ({
         title={`Paypal Orders (${paypalData.length})`}
         description="Manage paypal orders for your store"
       />
-      <Separator />
+      <hr />
       <div className="pr-5">
           <OrderButtons storeId={params.storeId}/>
       </div>

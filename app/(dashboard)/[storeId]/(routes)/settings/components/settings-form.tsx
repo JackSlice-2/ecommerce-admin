@@ -4,7 +4,6 @@ import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
 import { Input } from "@/components/ui/input";
-import { Separator } from "@/components/ui/separator";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Store } from "@prisma/client";
 import { Trash } from "lucide-react";
@@ -111,7 +110,7 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({
             <Trash className="h-4 w-4" />
             </Button>
         </div>
-        <Separator />
+        <hr />
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}
             className="space-y-8 w-full">
@@ -151,7 +150,7 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({
                 </Button>
             </form>
         </Form>
-        <Separator/>
+        <hr/>
         <ApiAlert
         title="NEXT_PUBLIC_API_URL"
         description={`${origin}/api/${params.storeId}`}

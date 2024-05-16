@@ -2,7 +2,6 @@
 
 import { Button } from "@/components/ui/button"
 import { Heading } from "@/components/ui/heading"
-import { Separator } from "@/components/ui/separator"
 import { Plus } from "lucide-react"
 import { useParams, useRouter } from "next/navigation"
 import { BillboardColumn, columns } from "./columns"
@@ -35,7 +34,7 @@ export const BillboardClient: React.FC<BillboardClientProps> = ({
                     Add new
             </Button>
         </div>
-        <Separator />
+        <hr />
         <div className="text-2xl font-bold">
             Main Billboard
         </div>
@@ -45,7 +44,7 @@ export const BillboardClient: React.FC<BillboardClientProps> = ({
         </div>
         <DataTable searchKey="label" columns={columns} data={otherData} />
         <Heading title="API" description="API calls for Billboards" />
-        <Separator />
+        <hr />
         <ApiList 
         entityName="billboards" 
         entityIdName="billboardsId"/>

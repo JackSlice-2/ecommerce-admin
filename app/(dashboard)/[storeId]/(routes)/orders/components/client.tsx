@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Heading } from '@/components/ui/heading';
-import { Separator } from '@/components/ui/separator';
+
 import { OrderColumn, PayOrderColumn, columns } from './columns';
 import { DataTable } from '@/components/ui/data-table';
 import OrderButtons from '@/components/ui/OrderButtons';
@@ -30,7 +30,7 @@ export const OrderClient: React.FC<OrderClientProps> = ({
         title={`All Orders (${total})`}
         description="Manage orders for your store"
       />
-      <Separator />
+      <hr />
       <div className="pr-5">
           <OrderButtons storeId={params.storeId}
           />

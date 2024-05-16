@@ -4,7 +4,6 @@ import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
 import { Input } from "@/components/ui/input";
-import { Separator } from "@/components/ui/separator";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Info } from "@prisma/client";
 import { Trash } from "lucide-react";
@@ -145,7 +144,7 @@ const onSubmit = async (data: InfoFormValues) => {
                 </Button>
                 )}
             </div>
-            <Separator />
+            <hr />
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)}
                 className="space-y-8 w-full">
@@ -220,7 +219,7 @@ const onSubmit = async (data: InfoFormValues) => {
                     </Button>
                 </form>
             </Form>
-            <Separator/>
+            <hr/>
         </>
         );
     };

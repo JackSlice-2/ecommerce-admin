@@ -2,7 +2,6 @@
 
 import { Button } from "@/components/ui/button"
 import { Heading } from "@/components/ui/heading"
-import { Separator } from "@/components/ui/separator"
 import { Plus } from "lucide-react"
 import { useParams, useRouter } from "next/navigation"
 import { InfoColumn, columns } from "./columns"
@@ -33,10 +32,10 @@ export const InfoClient: React.FC<InfoClientProps> = ({
                 </Button>
             )}
         </div>
-        <Separator />
+        <hr />
         <DataTable searchKey="name" columns={columns} data={data}/>
         <Heading title="API" description="API calls for Infos" />
-        <Separator />
+        <hr />
         <ApiList 
         entityName="infos" 
         entityIdName="infosId"/>

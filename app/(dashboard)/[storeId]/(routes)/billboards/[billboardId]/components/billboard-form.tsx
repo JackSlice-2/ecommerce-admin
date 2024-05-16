@@ -4,7 +4,6 @@ import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
 import { Input } from "@/components/ui/input";
-import { Separator } from "@/components/ui/separator";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Billboard } from "@prisma/client";
 import { Trash } from "lucide-react";
@@ -139,7 +138,7 @@ export const BillboardForm: React.FC<BillboardFormProps & { isMain?: boolean }> 
             </Button>
             )}
         </div>
-        <Separator />
+        <hr />
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}
             className="space-y-8 w-full">
@@ -184,7 +183,7 @@ export const BillboardForm: React.FC<BillboardFormProps & { isMain?: boolean }> 
                 </Button>
             </form>
         </Form>
-        <Separator/>
+        <hr/>
     </>
     );
 };
