@@ -34,7 +34,6 @@ type BillboardFormValues = z.infer<typeof formSchema>;
 
 interface BillboardFormProps {
     initialData: Billboard | null;
-    id: string;
 }
 
 export const BillboardForm: React.FC<BillboardFormProps & { isMain?: boolean }> = ({
