@@ -5,7 +5,7 @@ import { Heading } from "@/components/ui/heading"
 import { Plus } from "lucide-react"
 import { useParams, useRouter } from "next/navigation"
 import { InfoColumn, columns } from "./columns"
-import { DataTable } from "@/components/ui/data-table"
+import { DataTable } from "@/components/ui/DataTable"
 import { ApiList } from "@/components/ui/api-list"
 
 interface InfoClientProps {
@@ -24,7 +24,6 @@ export const InfoClient: React.FC<InfoClientProps> = ({
             title={`Store Contact Information`}
             description="Manage your store`s contact information"
             />
-            {/* Conditionally render the button based on data length */}
             {data.length === 0 && (
                 <Button onClick={() => router.push(`/${params.storeId}/infos/new`)}>
                     <Plus className="mr-2 h-4 w-4"/>
@@ -33,7 +32,9 @@ export const InfoClient: React.FC<InfoClientProps> = ({
             )}
         </div>
         <hr />
-        <DataTable searchKey="name" columns={columns} data={data}/>
+        <div className="w-full">
+        <DataTable searchKey="name" columns={columns} data={data} gridLayout/>
+        </div>
         <Heading title="API" description="API calls for Infos" />
         <hr />
         <ApiList 

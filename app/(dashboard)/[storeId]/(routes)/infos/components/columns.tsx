@@ -40,7 +40,8 @@ export const columns: ColumnDef<InfoColumn>[] = [
     header: "Logo",
     cell: ({ row }) => (
       <div style={{ width: "50px", height: "50px" }}>
-        <Image src={row.original.icon} alt="Icon" width={50} height={50} />
+        <Image src={row.original.icon} alt="Icon" width={50} height={50} 
+        className="rounded-md"/>
       </div>
     ),
   },
