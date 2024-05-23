@@ -1,4 +1,3 @@
-"use client";
 
 import axios from "axios";
 import { useState } from "react";
@@ -16,10 +15,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { AlertModal } from "@/components/modals/alert-modal";
 
-import { ColorColumn } from "./columns";
+import { OrderColumn } from "./columns";
 
 interface CellActionProps {
-  data: ColorColumn;
+  data: OrderColumn;
 }
 
 export const CellAction: React.FC<CellActionProps> = ({
@@ -31,13 +30,17 @@ export const CellAction: React.FC<CellActionProps> = ({
   const [loading, setLoading] = useState(false);
 
   const onConfirm = async () => {
+    if (data.isPaid) {
+      toast.error('Cannot delete a paid paypalpayment.');
+      return;
+    }
     try {
       setLoading(true);
-      await axios.delete(`/api/${params.storeId}/colors/${data.id}`);
-      toast.success('Color deleted.');
+      await axios.delete(`/api/${params.storeId}/paypal/${data.id}`);
+      toast.success('Order deleted.');
       router.refresh();
     } catch (error) {
-      toast.error('Make sure you removed all products using this color first.');
+      toast.error('Failed to delete paypalpayment.');
     } finally {
       setOpen(false);
       setLoading(false);
@@ -46,7 +49,7 @@ export const CellAction: React.FC<CellActionProps> = ({
 
   const onCopy = (id: string) => {
     navigator.clipboard.writeText(id);
-    toast.success('Color ID copied to clipboard.');
+    toast.success('Order ID copied to clipboard.');
   }
 
   return (
@@ -72,7 +75,7 @@ export const CellAction: React.FC<CellActionProps> = ({
             <Copy className="mr-2 h-4 w-4" /> Copy Id
           </DropdownMenuItem>
           <DropdownMenuItem
-            onClick={() => router.push(`/${params.storeId}/colors/${data.id}`)}
+            onClick={() => router.push(`/${params.storeId}/paypal/${data.id}`)}
           >
             <Edit className="mr-2 h-4 w-4" /> Update
           </DropdownMenuItem>

@@ -2,25 +2,40 @@
 
 import React from 'react';
 import { Heading } from '@/components/ui/heading';
-import { OrderColumn, columns } from './columns';
+
+import { OrderColumn, PayOrderColumn, columns } from './columns';
 import { DataTable } from '@/components/ui/data-table';
+import OrderButtons from '@/components/ui/OrderButtons';
+import { useParams } from 'next/navigation';
+
+type OrderOrPayOrderColumn = OrderColumn | PayOrderColumn;
 
 interface OrderClientProps {
   stripeData: OrderColumn[];
+  paypalData: PayOrderColumn[]
 }
 
 export const OrderClient: React.FC<OrderClientProps> = ({
   stripeData,
+  paypalData,
 }) => {
+  const combinedData: OrderOrPayOrderColumn[] = [...stripeData, ...paypalData];
+  const params = useParams();
+
+  const total = combinedData.length.toString();
 
   return (
     <>
       <Heading
-        title={`All Orders (${stripeData.length.toString()})`}
+        title={`All Orders (${total})`}
         description="Manage orders for your store"
       />
       <hr />
-      <DataTable searchKey="products" columns={columns} data={stripeData} />
+      <div className="pr-5">
+          <OrderButtons storeId={params.storeId}
+          />
+      </div>
+      <DataTable searchKey="products" columns={columns} data={combinedData} />
     </>
   );
 };
