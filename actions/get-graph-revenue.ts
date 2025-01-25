@@ -14,7 +14,7 @@ export const getGraphRevenue = async (storeId: string) => {
         include: {
             orderItems: {
                 include: {
-                    product: true
+                    Product: true
                 }
             }
         }
@@ -27,7 +27,7 @@ export const getGraphRevenue = async (storeId: string) => {
         let revenueForOrder = 0;
 
         for (const item of order.orderItems) {
-            revenueForOrder += item.product.price.toNumber();
+            revenueForOrder += item.Product.price;
         }
 
         monthlyRevenue[month] = (monthlyRevenue[month] || 0) + revenueForOrder;

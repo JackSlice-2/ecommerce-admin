@@ -1,190 +1,160 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
-  url = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
 }
 
 model Store {
-  id String @id @default(uuid())
-  name String
+  id               String          @id @default(cuid()) @map("_id")
+  name             String
   frontendStoreUrl String
-  userId String
-  billboards Billboard[] @relation("StoreToBillboard")
-  categories Category[] @relation("StoreToCategory")
-  sizes Size[] @relation("StoreToSize")
-  colors Color[] @relation("StoreToColor")
-  products Product[] @relation("StoreToProduct")
-  orders Order[] @relation("StoreToOrder")
-  infos Info[] @relation("StoreToInfo")
-  payPalPayment PayPalPayment[] @relation("StoreToPayPalPayment")
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  userId           String
+  billboards       Billboard[]
+  categories       Category[]
+  sizes            Size[]
+  colors           Color[]
+  products         Product[]
+  orders           Order[]
+  infos            Info[]
+  payPalPayments   PayPalPayment[]
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
 }
 
 model Billboard {
-  id String @id @default(uuid())
-  storeId String
-  store Store @relation("StoreToBillboard", fields: [storeId], references: [id])
-  label String
-  imageUrl String
-  isMain Boolean @default(false)
+  id         String     @id @default(cuid()) @map("_id")
+  storeId    String
+  label      String
+  imageUrl   String
+  isMain     Boolean    @default(false)
   categories Category[]
-  createdAt DateTime @default(now())
-  updateAt DateTime @updatedAt
-
-  @@index([storeId])
+  createdAt  DateTime   @default(now())
+  updateAt   DateTime   @updatedAt
+  Store      Store      @relation(fields: [storeId], references: [id])
 }
 
 model Category {
-  id String @id @default(uuid())
-  storeId String
-  store Store @relation("StoreToCategory", fields: [storeId], references: [id])
+  id          String    @id @default(cuid()) @map("_id")
+  storeId     String
   billboardId String
-  billboard Billboard @relation(fields: [billboardId], references: [id])
-  products Product[] @relation("CategoryToProduct")
-  name String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([storeId])
-  @@index([billboardId])
+  name        String
+  products    Product[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  Store       Store     @relation(fields: [storeId], references: [id])
+  Billboard   Billboard @relation(fields: [billboardId], references: [id])
 }
 
 model Size {
-  id String @id @default(uuid())
-  storeId String
-  store Store @relation("StoreToSize", fields: [storeId], references: [id])
-  name String
-  value String
-  products Product[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([storeId])
+  id        String    @id @default(cuid()) @map("_id")
+  storeId   String
+  name      String
+  value     String
+  products  Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Store     Store     @relation(fields: [storeId], references: [id])
 }
 
 model Color {
-  id          String    @id @default(uuid())
-  storeId     String
-  store       Store     @relation("StoreToColor", fields: [storeId], references: [id])
-  name        String
-  value       String
-  products Product[]
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-
-
-  @@index([storeId])
+  id        String    @id @default(cuid()) @map("_id")
+  storeId   String
+  name      String
+  value     String
+  products  Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Store     Store     @relation(fields: [storeId], references: [id])
 }
 
 model Product {
-  id String @id @default(uuid())
-  storeId String
-  store Store @relation("StoreToProduct", fields: [storeId], references: [id])
+  id         String      @id @default(cuid()) @map("_id")
+  storeId    String
   categoryId String
-  category Category @relation("CategoryToProduct", fields: [categoryId], references: [id])
-  name String
-  price Decimal
-  isFeatured Boolean @default(false)
-  isArchived Boolean @default(false)
-  sizeId String
-  size Size @relation(fields: [sizeId], references: [id])
-  colorId String
-  color Color @relation(fields: [colorId], references: [id])
-  images Image[]
+  name       String
+  price      Int
+  isFeatured Boolean     @default(false)
+  isArchived Boolean     @default(false)
+  sizeId     String
+  colorId    String
+  images     Image[]
   orderItems OrderItem[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([storeId])
-  @@index([sizeId])
-  @@index([categoryId])
-  @@index([colorId])
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  Store      Store       @relation(fields: [storeId], references: [id])
+  Category   Category    @relation(fields: [categoryId], references: [id])
+  Size       Size        @relation(fields: [sizeId], references: [id])
+  Color      Color       @relation(fields: [colorId], references: [id])
 }
 
 model Image {
-  id String @id @default(uuid())
+  id        String   @id @default(cuid()) @map("_id")
   productId String
-  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
-  url String
+  url       String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  @@index([productId])
+  Product   Product  @relation(fields: [productId], references: [id])
 }
 
 model Order {
-  id String @id @default(uuid())
-  storeId String
-  store Store @relation("StoreToOrder", fields: [storeId], references: [id])
+  id         String      @id @default(cuid()) @map("_id")
+  storeId    String
   orderItems OrderItem[]
-  isPaid Boolean @default(false)
-  phone String @default("")
-  address String @default("")
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  isPaid     Boolean     @default(false)
+  phone      String      @default("")
+  address    String      @default("")
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
   totalPrice String?
-
-  @@index([storeId])
+  Store      Store       @relation(fields: [storeId], references: [id])
 }
 
 model OrderItem {
-  id String @id @default(uuid())
-  orderId String
-  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  id        String  @id @default(cuid()) @map("_id")
+  orderId   String
   productId String
-  product Product @relation(fields: [productId], references: [id])
-
-  @@index([orderId])
-  @@index([productId])
+  Product   Product @relation(fields: [productId], references: [id])
+  Order     Order   @relation(fields: [orderId], references: [id])
 }
 
 model Info {
-  id String @id @default(uuid())
-  storeId String
-  store Store @relation("StoreToInfo", fields: [storeId], references: [id])
-  name String
-  billboardid String
-  icon String
+  id          String   @id @default(cuid()) @map("_id")
+  storeId     String
+  name        String
+  billboardId String
+  icon        String
   phonenumber String
-  whatsapp String
-  instagram String
-  facebook String
-  email String
-  visa Boolean @default(false)
-  mastercard Boolean @default(false)
-  amex Boolean @default(false)
-  hipercard Boolean @default(false)
-  elo Boolean @default(false)
-  pix Boolean @default(false)
-  paypal Boolean @default(false)
-  stripe Boolean @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([storeId])
+  whatsapp    String
+  instagram   String
+  facebook    String
+  email       String
+  visa        Boolean  @default(false)
+  mastercard  Boolean  @default(false)
+  amex        Boolean  @default(false)
+  hipercard   Boolean  @default(false)
+  elo         Boolean  @default(false)
+  pix         Boolean  @default(false)
+  paypal      Boolean  @default(false)
+  stripe      Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  Store       Store    @relation(fields: [storeId], references: [id])
 }
 
 model PayPalPayment {
-  id String @id @default(uuid())
-  storeId String
-  orderID String
-  payerID String
-  paymentID String?
-  billingToken String?
+  id                     String   @id @default(cuid()) @map("_id")
+  storeId                String
+  orderID                String
+  payerID                String
+  paymentID              String?
+  billingToken           String?
   facilitatorAccessToken String?
-  paymentSource String?
-  totalPrice String @default("0")
-  store Store @relation("StoreToPayPalPayment", fields: [storeId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([storeId])
+  paymentSource          String?
+  totalPrice             String   @default("0")
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+  Store                  Store    @relation(fields: [storeId], references: [id])
 }
