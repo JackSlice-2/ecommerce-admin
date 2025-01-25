@@ -7,7 +7,7 @@ import Image from "next/image"
 export type InfoColumn = {
   id: string
   name: string
-  billboardid: string
+  billboardId: string
   icon: string
   phonenumber: string
   whatsapp: string

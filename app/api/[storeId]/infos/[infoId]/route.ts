@@ -33,7 +33,7 @@ export async function PATCH(
     const body = await req.json();
 
     const { name,
-        billboardid,
+        billboardId,
         icon,
         phonenumber,
         whatsapp,
@@ -79,7 +79,7 @@ export async function PATCH(
        },
         data: {
             name,
-            billboardid,
+            billboardId,
             icon,
             phonenumber,
             whatsapp,
