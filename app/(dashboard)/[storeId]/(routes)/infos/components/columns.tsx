@@ -7,7 +7,6 @@ import Image from "next/image"
 export type InfoColumn = {
   id: string
   name: string
-  billboardId: string
   icon: string
   phonenumber: string
   whatsapp: string
@@ -43,10 +42,6 @@ export const columns: ColumnDef<InfoColumn>[] = [
         <Image src={row.original.icon} alt="Icon" width={50} height={50} />
       </div>
     ),
-  },
-  {
-    accessorKey: "billboardid",
-    header: "Billboard ID",
   },{
     accessorKey: "phonenumber",
     header: "Phone Number",

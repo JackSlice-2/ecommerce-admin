@@ -21,7 +21,6 @@ const InfosPage = async ({
     const formattedInfos: InfoColumn[] = infos.map((item) => ({
         id: item.id,
         name: item.name,
-        billboardId: item.billboardId,
         icon: item.icon,
         phonenumber: item.phonenumber,
         whatsapp: item.whatsapp,

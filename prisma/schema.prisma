@@ -124,7 +124,6 @@ model Info {
   id          String   @id @default(cuid()) @map("_id")
   storeId     String
   name        String
-  billboardId String
   icon        String
   phonenumber String
   whatsapp    String

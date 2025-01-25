@@ -12,7 +12,6 @@ export async function POST(
 
         const { 
             name,
-            billboardId,
             icon,
             phonenumber,
             whatsapp,
@@ -57,7 +56,6 @@ export async function POST(
         const info = await prismadb.info.create({
             data: {
                 name,
-                billboardId,
                 icon,
                 phonenumber,
                 whatsapp,
