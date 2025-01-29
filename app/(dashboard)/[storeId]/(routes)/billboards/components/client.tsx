@@ -29,7 +29,9 @@ export const BillboardClient: React.FC<BillboardClientProps> = ({
             title={`Billboards (${data.length})`}
             description="Create one Main Billboard for the and multiple Category Billboards for your store."
             />
-            <Button onClick={() => router.push(`/${params.storeId}/billboards/new`)}>
+            <Button onClick={() => router.push(`/${params.storeId}/billboards/new`)}
+            className="whitespace-nowrap inline-flex"
+            >
                 <Plus className="mr-2 h-4 w-4"/>
                     Add new
             </Button>
