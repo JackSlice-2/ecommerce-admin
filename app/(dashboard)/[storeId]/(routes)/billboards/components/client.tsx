@@ -8,13 +8,17 @@ import { BillboardColumn, columns } from "./columns"
 import { DataTable } from "@/components/ui/data-table"
 import { ApiList } from "@/components/ui/api-list"
 import { useMemo } from "react"
+import { CategoryColumn, columns as categoryColumn } from "../../categories/components/columns"
 
 interface BillboardClientProps {
     data: BillboardColumn[]
+    categoryData: CategoryColumn[]
+    
 }
 
 export const BillboardClient: React.FC<BillboardClientProps> = ({
-    data
+    data,
+    categoryData
 }) => {
     const router = useRouter();
     const params = useParams();
@@ -45,6 +49,21 @@ export const BillboardClient: React.FC<BillboardClientProps> = ({
             Category Billboards
         </div>
         <DataTable searchKey="label" columns={columns} data={otherData} />
+         <>
+            <div className="flex items-center justify-between">
+                <Heading
+                title={`Categories (${categoryData.length})`}
+                description="Manage categories for your store"
+                />
+            </div>
+            <hr />
+            <DataTable searchKey="name" columns={categoryColumn} data={categoryData}/>
+            <Heading title="API" description="API calls for Categories" />
+            <hr />
+            <ApiList 
+            entityName="categories" 
+            entityIdName="categoryId"/>
+        </>
         <Heading title="API" description="API calls for Billboards" />
         <hr />
         <ApiList 
