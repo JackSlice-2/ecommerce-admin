@@ -50,7 +50,9 @@ export default function StoreSwitcher({ items = [] }: StoreSwitcherProps) {
           className={cn("w-[200px] justify-between text-lg")}
         >
           <StoreIcon className="mr-2 h-5 w-5" />
-          {currentStore?.label}
+          <span className="inline-flex whitespace-nowrap overflow-hidden">
+            {currentStore?.label}
+          </span>
           <ChevronsUpDown className="pl-auto h-4 w-5 shrink-0 opacity-50" />
         </Button>
       </DropdownMenuTrigger>
