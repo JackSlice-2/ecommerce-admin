@@ -80,7 +80,7 @@ model Product {
   isArchived Boolean     @default(false)
   sizeId     String
   colorId    String
-  images     Image[]
+  images     Image[] @relation("ProductImages")
   orderItems OrderItem[]
   createdAt  DateTime    @default(now())
   updatedAt  DateTime    @updatedAt
@@ -96,7 +96,7 @@ model Image {
   url       String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  Product   Product  @relation(fields: [productId], references: [id])
+  Product   Product  @relation("ProductImages", fields: [productId], references: [id], onDelete: Cascade)
 }
 
 model Order {

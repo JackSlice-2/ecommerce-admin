@@ -13,19 +13,28 @@ const BillboardsPage = async ({
         where: {
             storeId: params.storeId
         },
+        include: {
+            categories: true,
+        },
         orderBy: {
             createdAt: 'desc'
         }
     });
 
-    const formattedBillboards: BillboardColumn[] = billboards.map((item) => ({
-        id: item.id,
-        label: item.label,
-        imageUrl: item.imageUrl,
-        isMain: item.isMain,
-        disableDelete: item.isMain,
-        createdAt: format(item.createdAt, "MMMM do, yyyy")
-    }));
+    const formattedBillboards: BillboardColumn[] = billboards.map((item) => {
+        
+        const categoryNames = item.categories.map(category => category.name).join(", ");
+        return {
+                
+            id: item.id,
+            label: item.label,
+            imageUrl: item.imageUrl,
+            isMain: item.isMain,
+            categories: categoryNames,
+            disableDelete: item.isMain,
+            createdAt: format(item.createdAt, "MMMM do, yyyy")
+        }
+    });
 
     return (
         <div className="flex-col">
