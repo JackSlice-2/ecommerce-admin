@@ -13,6 +13,14 @@ export type InfoColumn = {
   instagram: string
   facebook: string
   email: string
+  footerText: string
+  footerText2: string
+  darkMode: boolean
+  darkPrimaryColor: string
+  darkSecondaryColor: string
+  lightMode: boolean
+  lightPrimaryColor: string
+  lightSecondaryColor: string
   visa: boolean
   mastercard: boolean
   amex: boolean
@@ -59,6 +67,38 @@ export const columns: ColumnDef<InfoColumn>[] = [
   {
     accessorKey: "email",
     header: "E-Mail",
+  },
+  {
+    accessorKey: "footerText",
+    header: "footerText",
+  },
+  {
+    accessorKey: "footerText2",
+    header: "footerText2",
+  },
+  {
+    accessorKey: "darkMode",
+    header: "darkMode",
+  },
+  {
+    accessorKey: "darkPrimaryColor",
+    header: "darkPrimaryColor",
+  },
+  {
+    accessorKey: "darkSecondaryColor",
+    header: "darkSecondaryColor",
+  },
+  {
+    accessorKey: "lightMode",
+    header: "lightMode",
+  },
+  {
+    accessorKey: "lightPrimaryColor",
+    header: "lightPrimaryColor",
+  },
+  {
+    accessorKey: "lightSecondaryColor",
+    header: "lightSecondaryColor",
   },
   {
     accessorKey: "visa",

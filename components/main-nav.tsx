@@ -63,7 +63,7 @@ export function MainNav({
             key={route.href}
             href={route.href}
             className={cn(
-                "text-sm font-medium transition-colors hover:bg-slate-800 rounded-xl py-2 mx-2 hover:text-primary px-1",
+                "text-xl lg:text-md transition-colors hover:bg-slate-800 rounded-xl py-3 font-semibold hover:text-primary px-1",
                 route.active ? "text-black dark:text-white" : "text-muted-foreground"
             )}
             >

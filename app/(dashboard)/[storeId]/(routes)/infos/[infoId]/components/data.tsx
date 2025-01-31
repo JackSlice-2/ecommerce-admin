@@ -56,5 +56,49 @@ export const InputTexts = [
         name: "email",
         label: "E-Mail Address",
         placeholder: ""
+    },
+    {
+        name: 'footerText',
+        label: 'Footer Text Year',
+        placeholder: '© 2023'
+    },
+    {
+        name: 'footerText2',
+        label: 'Footer Text Rights',
+        placeholder: 'Todos Direitos Reservados.'
     }
+]
+
+export const toggleTheme = [
+    {
+        name: "darkMode",
+        label: "Dark Mode",
+    },
+    {
+        name: "lightMode",
+        label: "Light Mode",
+    },
+]
+
+export const ColorInputs = [
+    {
+        name: "darkPrimaryColor",
+        label: "darkPrimaryColor",
+        placeholder: "darkPrimaryColor",
+    },
+    {
+        name: "darkSecondaryColor",
+        label: "darkSecondaryColor",
+        placeholder: "darkSecondaryColor",
+    },
+    {
+        name: "lightPrimaryColor",
+        label: "lightPrimaryColor",
+        placeholder: "lightPrimaryColor",
+    },
+    {
+        name: "lightSecondaryColor",
+        label: "lightSecondaryColor",
+        placeholder: "lightSecondaryColor",
+    },
 ]

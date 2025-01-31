@@ -130,6 +130,14 @@ model Info {
   instagram   String
   facebook    String
   email       String
+  footerText String @default("2023 ")
+  footerText2 String @default("Todos Direitos Reservados.")
+  darkMode Boolean @default(true)
+  darkPrimaryColor String @default("")
+  darkSecondaryColor String @default("")
+  lightMode Boolean @default(true)
+  lightPrimaryColor String @default("")
+  lightSecondaryColor String @default("")
   visa        Boolean  @default(false)
   mastercard  Boolean  @default(false)
   amex        Boolean  @default(false)

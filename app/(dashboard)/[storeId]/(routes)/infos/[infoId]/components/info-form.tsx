@@ -22,7 +22,7 @@ import { useParams, useRouter } from "next/navigation";
 import { AlertModal } from "@/components/modals/alert-modal";
 import ImageUpload from "@/components/ui/image-upload";
 import { Checkbox } from "@/components/ui/checkbox";
-import { InputTexts, paymentMethods } from "./data";
+import { ColorInputs, InputTexts, paymentMethods, toggleTheme } from "./data";
 
 const formSchema = z.object({
     name: z.string().min(1),
@@ -32,6 +32,14 @@ const formSchema = z.object({
     instagram: z.string(),
     facebook: z.string(),
     email: z.string(),
+    footerText: z.string().default('2025'),
+    footerText2: z.string().default('Todos Direitos Reservados'),
+    darkMode: z.boolean().default(true),
+    darkPrimaryColor: z.string().default('darkPrimaryColor'),
+    darkSecondaryColor: z.string().default('darkPrimaryColor'),
+    lightMode: z.boolean().default(true),
+    lightPrimaryColor: z.string().default('2025'),
+    lightSecondaryColor: z.string().default('lightSecondaryColor'),
     visa: z.boolean().default(false),
     mastercard: z.boolean().default(false),
     amex: z.boolean().default(false),
@@ -73,6 +81,14 @@ export const InfoForm: React.FC<InfoFormProps> = ({
             instagram: '',
             facebook: '',
             email: '',
+            footerText: '',
+            footerText2: '',
+            darkMode: true,
+            darkPrimaryColor: '',
+            darkSecondaryColor: '',
+            lightMode: true,
+            lightPrimaryColor: '',
+            lightSecondaryColor: '',
             visa: false,
             mastercard: false,
             amex: false,
@@ -121,24 +137,24 @@ const onSubmit = async (data: InfoFormValues) => {
     return (
         <>
         <AlertModal 
-        isOpen={open}
-        onClose={() => setOpen(false)}
-        onConfirm={onDelete}
-        loading={loading}
+            isOpen={open}
+            onClose={() => setOpen(false)}
+            onConfirm={onDelete}
+            loading={loading}
         />
             <div className="flex items-center justify-between">
                 <Heading
-                title={title}
-                description={description}
+                    title={title}
+                    description={description}
                 />
                 {initialData && (
                 <Button
-                disabled={loading}
-                variant="destructive"
-                size="sm"
-                onClick={() => setOpen(true)}
+                    disabled={loading}
+                    variant="destructive"
+                    size="sm"
+                    onClick={() => setOpen(true)}
                 >
-                <Trash className="h-4 w-4" />
+                    <Trash className="h-4 w-4" />
                 </Button>
                 )}
             </div>
@@ -180,7 +196,6 @@ const onSubmit = async (data: InfoFormValues) => {
                                                 value={field.value.toString()}
                                                 onChange={(e) => field.onChange(e.target.value)} 
                                             />
-
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -213,6 +228,54 @@ const onSubmit = async (data: InfoFormValues) => {
                         ))}
 
                     </div>
+                    <div className="flex gap-3 justify-around mt-5">
+                        {toggleTheme.map((method) => (
+                            <FormField
+                                key={method.name}
+                                control={form.control}
+                                name={method.name as keyof InfoFormValues}
+                                render={({ field }) => (
+                                    <FormItem className="text-center">
+                                        <FormLabel>{method.label}</FormLabel>
+                                        <FormControl>
+                                            <div className="flex justify-center items-center">
+                                                <Checkbox
+                                                    checked={field.value as boolean}
+                                                    onCheckedChange={field.onChange}
+                                                    className="mx-3 rounded-full p-3 justify-center items-center"
+                                                />
+                                            </div>
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                        ))}
+
+                    </div>
+                    <div className="grid grid-cols-3 gap-8">
+                            {ColorInputs.map((input) => (
+                                <FormField
+                                    key={input.name}
+                                    control={form.control}
+                                    name={input.name as keyof InfoFormValues}
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>{input.label}</FormLabel>
+                                            <FormControl>
+                                            <Input
+                                                disabled={loading}
+                                                placeholder={input.placeholder}
+                                                value={field.value.toString()}
+                                                onChange={(e) => field.onChange(e.target.value)} 
+                                            />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                            ))}
+                        </div>
                     <Button 
                     disabled={loading} 
                     className="ml-auto" 
