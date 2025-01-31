@@ -3,7 +3,6 @@
 import { ColumnDef } from "@tanstack/react-table"
 import { CellAction } from "./cell-action"
 import Image from "next/image"
-import { Category } from "@prisma/client"
 
 export type BillboardColumn = {
   id: string
@@ -24,8 +23,8 @@ export const columns: ColumnDef<BillboardColumn>[] = [
     accessorKey: "imageUrl",
     header: "Image",
     cell: ({ row }) => (
-      <div style={{ width: "50px", height: "50px" }}>
-        <Image src={row.original.imageUrl} alt="Icon" width={50} height={50} />
+      <div style={{ width: "110px", height: "80px" }}>
+        <Image src={row.original.imageUrl} alt="Icon" width={110} height={80} />
       </div>
     ),
   },

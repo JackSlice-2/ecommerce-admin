@@ -169,7 +169,7 @@ const onSubmit = async (data: InfoFormValues) => {
                                 <FormItem>
                                     <FormLabel>Backround Image</FormLabel>
                                     <FormControl>
-                                        <ImageUpload 
+                                        <ImageUpload
                                         value={field.value ? [field.value] : []}
                                         disabled={loading}
                                         onChange={(url) => field.onChange(url)}

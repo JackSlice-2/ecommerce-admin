@@ -154,6 +154,7 @@ export const BillboardForm: React.FC<BillboardFormProps & { isMain?: boolean }> 
                                 <FormLabel>Main Backround Image</FormLabel>
                                 <FormControl>
                                     <ImageUpload 
+                                    full
                                     value={field.value ? [field.value] : []}
                                     disabled={loading}
                                     onChange={(url) => field.onChange(url)}

@@ -63,7 +63,7 @@ export default function StoreSwitcher({ items = [] }: StoreSwitcherProps) {
             <DropdownMenuItem
               key={store.value}
               onSelect={() => onStoreSelect(store)}
-              className={cn("text-sm")}
+              className={cn("text-md")}
             >
               <StoreIcon className="mr-2 h-4 w-4" />
               {store.label}
