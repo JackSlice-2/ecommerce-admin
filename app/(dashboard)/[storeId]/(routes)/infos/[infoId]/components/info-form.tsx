@@ -22,7 +22,7 @@ import { useParams, useRouter } from "next/navigation";
 import { AlertModal } from "@/components/modals/alert-modal";
 import ImageUpload from "@/components/ui/image-upload";
 import { Checkbox } from "@/components/ui/checkbox";
-import { ColorInputs, InputTexts, paymentMethods, toggleTheme } from "./data";
+import { /*ColorInputs,*/ InputTexts, paymentMethods, /*toggleTheme*/ } from "./data";
 
 const formSchema = z.object({
     name: z.string().min(1),
@@ -228,7 +228,7 @@ const onSubmit = async (data: InfoFormValues) => {
                         ))}
 
                     </div>
-                    <div className="flex gap-3 justify-around mt-5">
+                  {/*  <div className="flex gap-3 justify-around mt-5">
                         {toggleTheme.map((method) => (
                             <FormField
                                 key={method.name}
@@ -275,7 +275,7 @@ const onSubmit = async (data: InfoFormValues) => {
                                     )}
                                 />
                             ))}
-                        </div>
+                        </div>*/}
                     <Button 
                     disabled={loading} 
                     className="ml-auto" 

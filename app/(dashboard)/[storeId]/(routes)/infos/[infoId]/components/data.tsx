@@ -69,36 +69,38 @@ export const InputTexts = [
     }
 ]
 
+/*
 export const toggleTheme = [
     {
         name: "darkMode",
-        label: "Dark Mode",
+        label: "Allow Dark Mode?",
     },
     {
         name: "lightMode",
-        label: "Light Mode",
+        label: "Allow Light Mode?",
     },
 ]
 
 export const ColorInputs = [
     {
         name: "darkPrimaryColor",
-        label: "darkPrimaryColor",
-        placeholder: "darkPrimaryColor",
+        label: "Dark Mode Primary Color",
+        placeholder: "#0000",
     },
     {
         name: "darkSecondaryColor",
-        label: "darkSecondaryColor",
-        placeholder: "darkSecondaryColor",
+        label: "Dark Mode Secondary Color",
+        placeholder: "#0000",
     },
     {
         name: "lightPrimaryColor",
-        label: "lightPrimaryColor",
-        placeholder: "lightPrimaryColor",
+        label: "Light Mode Primary Color",
+        placeholder: "#fff",
     },
     {
         name: "lightSecondaryColor",
-        label: "lightSecondaryColor",
-        placeholder: "lightSecondaryColor",
+        label: "Light Mode Secondary Color",
+        placeholder: "#fff",
     },
 ]
+    */

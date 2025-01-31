@@ -70,36 +70,36 @@ export const columns: ColumnDef<InfoColumn>[] = [
   },
   {
     accessorKey: "footerText",
-    header: "footerText",
+    header: "Year in Footer",
   },
   {
     accessorKey: "footerText2",
-    header: "footerText2",
-  },
+    header: "Rights Reservations",
+  },/*
   {
     accessorKey: "darkMode",
-    header: "darkMode",
+    header: "Dark Mode",
   },
   {
     accessorKey: "darkPrimaryColor",
-    header: "darkPrimaryColor",
+    header: "Dark Mode Primary Color",
   },
   {
     accessorKey: "darkSecondaryColor",
-    header: "darkSecondaryColor",
+    header: "Dark Mode Secondary Color",
   },
   {
     accessorKey: "lightMode",
-    header: "lightMode",
+    header: "Light Mode",
   },
   {
     accessorKey: "lightPrimaryColor",
-    header: "lightPrimaryColor",
+    header: "Light Mode Primary Color",
   },
   {
     accessorKey: "lightSecondaryColor",
-    header: "lightSecondaryColor",
-  },
+    header: "Light Mode Secondary Color",
+  },*/
   {
     accessorKey: "visa",
     header: "Visa",
