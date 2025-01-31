@@ -15,7 +15,10 @@ export async function POST(
             price, 
             categoryId, 
             sizeId, 
-            colorId, 
+            colorId,
+            colors,
+            inStock,
+            sizes,
             images, 
             isFeatured, 
             isArchived 
@@ -42,6 +45,18 @@ export async function POST(
         }
 
         if (!colorId) {
+            return new NextResponse("Color ID is required", { status: 400 });
+        }
+        
+        if (!colors) {
+            return new NextResponse("Color ID is required", { status: 400 });
+        }
+
+        if (!sizes) {
+            return new NextResponse("Color ID is required", { status: 400 });
+        }
+
+        if (!inStock) {
             return new NextResponse("Color ID is required", { status: 400 });
         }
 
@@ -72,7 +87,10 @@ export async function POST(
                 price, 
                 categoryId, 
                 sizeId, 
-                colorId, 
+                colorId,
+                colors,
+                sizes,
+                inStock,
                 isFeatured, 
                 isArchived,
                 storeId: params.storeId,
@@ -102,6 +120,11 @@ export async function GET(
         const colorId = searchParams.get("colorId") || undefined;
         const sizeId = searchParams.get("sizeId") || undefined;
         const isFeatured = searchParams.get("isFeatured");
+        const colors = searchParams.get("colors") ? searchParams.get("colors")?.split(",") : undefined;
+        const sizes = searchParams.get("sizes") ? searchParams.get("sizes")?.split(",") : undefined;
+        const inStock = searchParams.get("inStock") ? parseInt(searchParams.get("inStock")!) : 0;
+        
+
 
         if (!params.storeId) {
             return new NextResponse("Store ID is required", { status: 400 });
@@ -113,6 +136,9 @@ export async function GET(
             categoryId,
             colorId,
             sizeId,
+            colors: colors ? { hasSome: colors } : undefined,
+            sizes: sizes ? { hasSome: sizes } : undefined,
+            inStock,
             isFeatured: isFeatured ? true : undefined,
             isArchived: false
         },

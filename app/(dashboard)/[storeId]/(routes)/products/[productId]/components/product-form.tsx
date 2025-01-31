@@ -32,6 +32,9 @@ const formSchema = z.object({
     categoryId: z.string().min(1),
     colorId: z.string().min(1),
     sizeId: z.string().min(1),
+    colors: z.array(z.string()),
+    sizes: z.array(z.string()),
+    inStock: z.coerce.number().min(1),
     isFeatured: z.boolean().default(false).optional(),
     isArchived: z.boolean().default(false).optional(),
 });
@@ -41,6 +44,8 @@ type ProductFormValues = z.infer<typeof formSchema>;
 interface ProductFormProps {
     initialData: Product & {
         images: Image[]
+        colors: Color[]
+        sizes: Size[]
 } | null;
    categories: Category[];
    colors: Color[];
@@ -59,6 +64,12 @@ export const ProductForm: React.FC<ProductFormProps> = ({
 
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [colorsArray, setColorsArray] = useState<string[]>(
+        initialData ? initialData.colors.map((color) => color) : []
+        );
+    const [sizesArray, setSizesArray] = useState<string[]>(
+        initialData ? initialData.sizes.map((size) => size) : []
+        );
 
     const title = initialData ? "Edit product" : "Create product";
     const description = initialData ? "Edit a product" : "Add a new product";
@@ -71,6 +82,9 @@ export const ProductForm: React.FC<ProductFormProps> = ({
         defaultValues: initialData ? {
             ...initialData,
             price: parseFloat(String(initialData?.price)),
+            inStock: parseFloat(String(initialData?.inStock)),
+            colors: colorsArray,
+            sizes: sizesArray,
         } : {
             name: '',
             images: [],
@@ -78,6 +92,9 @@ export const ProductForm: React.FC<ProductFormProps> = ({
             categoryId: '',
             colorId: '',
             sizeId: '',
+            colors: [],
+            sizes: [],
+            inStock: 0,
             isFeatured: false,
             isArchived: false,
         }
@@ -86,10 +103,15 @@ export const ProductForm: React.FC<ProductFormProps> = ({
 const onSubmit = async (data: ProductFormValues) => {
     try {
         setLoading(true);
+        const finalData = {
+            ...data,
+            colors: colorsArray,
+            sizes: sizesArray,
+        };
         if (initialData) {
-            await axios.patch(`/api/${params.storeId}/products/${params.productId}`, data);
+            await axios.patch(`/api/${params.storeId}/products/${params.productId}`, finalData);
         } else {
-            await axios.post(`/api/${params.storeId}/products`, data);
+            await axios.post(`/api/${params.storeId}/products`, finalData);
         }
         router.refresh();
         router.push(`/${params.storeId}/products`);
@@ -115,6 +137,16 @@ const onSubmit = async (data: ProductFormValues) => {
             setOpen(false)
         }
     };
+
+    const onRemoveSize = (sizeValue: string) => {
+        setSizesArray((prevSizes) => prevSizes.filter((value) => value !== sizeValue));
+      };
+      
+      const onRemoveColor = (colorValue: string) => {
+        setColorsArray((prevColors) => prevColors.filter((value) => value !== colorValue));
+    };
+    
+      
 
     return (
     <>
@@ -162,7 +194,7 @@ const onSubmit = async (data: ProductFormValues) => {
                             </FormItem>
                         )}
                     />
-                <div className="grid grid-cols-3 gap-8">
+                <div className="grid md:grid-cols-2 lg::grid-cols-3 gap-8">
                     <FormField
                         control={form.control}
                         name="name"
@@ -183,7 +215,7 @@ const onSubmit = async (data: ProductFormValues) => {
                             <FormItem>
                                 <FormLabel>Price</FormLabel>
                                 <FormControl>
-                                    <Input type="number" 
+                                    <Input
                                     disabled={loading} 
                                     placeholder="9.99" {...field}/>
                                 </FormControl>
@@ -223,6 +255,20 @@ const onSubmit = async (data: ProductFormValues) => {
                 </FormItem>
               )}
             />
+             <FormField
+                        control={form.control}
+                        name="inStock"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Estoque</FormLabel>
+                                <FormControl>
+                                    <Input disabled={loading} placeholder="100" {...field}/>
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+            <div>
             <FormField
               control={form.control}
               name="sizeId"
@@ -231,7 +277,19 @@ const onSubmit = async (data: ProductFormValues) => {
                   <FormLabel>Size</FormLabel>
                   <Select 
                   disabled={loading} 
-                  onValueChange={field.onChange} 
+                  onValueChange={(sizeId) => {
+                    // Update the sizes array with the selected size's value
+                    setSizesArray((prevSizes) => {
+                      const size = sizes.find((s) => s.id === sizeId); // Find the size object by ID
+                      if (size && !prevSizes.includes(size.value)) {  // Use the size.value instead of sizeId
+                        const newSizes = [...prevSizes, size.value];
+                        console.log(newSizes); // Log the updated array with values
+                        return newSizes;
+                      }
+                      return prevSizes;
+                    });
+                    field.onChange(sizeId);  // This keeps the form state intact for sizeId
+                  }}
                   value={field.value} 
                   defaultValue={field.value}
                   >
@@ -255,38 +313,78 @@ const onSubmit = async (data: ProductFormValues) => {
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name="colorId"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Color</FormLabel>
-                  <Select 
-                  disabled={loading} 
-                  onValueChange={field.onChange} 
-                  value={field.value} 
-                  defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue 
-                        defaultValue={field.value} 
-                        placeholder="Select a color" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {colors.map((color) => (
-                        <SelectItem 
-                        key={color.id} 
-                        value={color.id}>{color.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
+            <div className="mt-4">
+  <h3 className="text-lg font-medium">Selected Sizes</h3>
+  <div className="flex gap-4 mt-2">
+  {sizesArray.map((sizeValue) => {
+      const size = sizes.find((s) => s.value === sizeValue);
+      return size ? (
+        <SizeBadge key={size.id} size={size} onRemove={() => onRemoveSize(size.value)} />
+      ) : null;
+    })}
+  </div>
+</div>
+</div>
+
+<div>
+           <FormField
+                control={form.control}
+                name="colorId"
+                render={({ field }) => (
+                    <FormItem>
+                        <FormLabel>Color</FormLabel>
+                        <Select
+                            disabled={loading}
+                            onValueChange={(colorId) => {
+                                // Update the colors array with the selected color
+                                setColorsArray((prevColors) => {
+                                    const color = colors.find((c) => c.id === colorId);
+                                    if (color && !prevColors.includes(color.value)) {
+                                        const newColors = [...prevColors, color.value];
+                                        console.log(newColors); // Log the updated array
+                                        return newColors;
+                                    }
+                                    return prevColors;
+                                });
+                                field.onChange(colorId);
+                            }}
+                            value={field.value}
+                            defaultValue={field.value}
+                        >
+                            <FormControl>
+                                <SelectTrigger>
+                                    <SelectValue
+                                        defaultValue={field.value}
+                                        placeholder="Select a color"
+                                    />
+                                </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                                {colors.map((color) => (
+                                    <SelectItem key={color.id} value={color.id}>
+                                        {color.name}
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                        <FormMessage />
+                    </FormItem>
+                )}
             />
+            {/* Display selected color balls */}
+            <div className="mt-4">
+                <h3 className="text-lg font-medium">Selected Colors</h3>
+                    <div className="flex gap-4 mt-2">
+                    {colorsArray.map((colorValue) => {
+                    const color = colors.find((c) => c.value === colorValue);
+                    return color ? (
+                        <ColorBall key={color.id} color={color} onRemove={() => onRemoveColor(color.value)} />
+                        ) : null;
+                    })}
+                        </div>
+                        </div>
+</div>
+
             <FormField
             control={form.control}
             name="isFeatured"
@@ -345,3 +443,26 @@ const onSubmit = async (data: ProductFormValues) => {
     </>
     );
 };
+
+
+export const ColorBall: React.FC<{ color: { id: string, name: string, value: string }, onRemove: (id: string) => void }> = ({ color, onRemove }) => (
+    <div className="flex flex-col items-center">
+        <div
+            className="w-8 h-8 rounded-full cursor-pointer"
+            style={{ backgroundColor: color.value }}
+            onClick={() => onRemove(color.id)}
+        ></div>
+        <p className="text-sm mt-2">{color.name}</p>
+    </div>
+);
+
+
+export const SizeBadge: React.FC<{ size: { id: string; name: string; value: string }, onRemove: (id: string) => void }> = ({ size, onRemove }) => (
+    <div className="flex flex-col items-center">
+    <div className="w-8 h-8 rounded-full border flex items-center justify-center cursor-pointer"
+    onClick={() => onRemove(size.id)}>
+      <span className="text-sm">{size.value}</span>
+    </div>
+    <p className="text-sm mt-2">{size.name}</p>
+  </div>
+);

@@ -43,7 +43,10 @@ export async function PATCH(
         price, 
         categoryId, 
         sizeId, 
-        colorId, 
+        colorId,
+        colors,
+        sizes,
+        inStock,
         images, 
         isFeatured, 
         isArchived 
@@ -106,6 +109,9 @@ export async function PATCH(
             categoryId, 
             sizeId, 
             colorId,
+            colors,
+            sizes,
+            inStock,
             images: {
                 deleteMany: {}
             },

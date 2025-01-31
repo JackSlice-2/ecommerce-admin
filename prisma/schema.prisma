@@ -80,6 +80,9 @@ model Product {
   isArchived Boolean     @default(false)
   sizeId     String
   colorId    String
+  colors String[]
+  sizes String[]
+  inStock Int @default(0)
   images     Image[] @relation("ProductImages")
   orderItems OrderItem[]
   createdAt  DateTime    @default(now())
