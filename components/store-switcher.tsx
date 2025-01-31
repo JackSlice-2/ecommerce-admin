@@ -47,9 +47,9 @@ export default function StoreSwitcher({ items = [] }: StoreSwitcherProps) {
           role="combobox"
           aria-expanded={selectedStore!== ''}
           aria-label="Select a Store"
-          className={cn("w-[200px] justify-between text-lg")}
+          className={cn("w-[200px] justify-between text-xl")}
         >
-          <StoreIcon className="mr-2 h-5 w-5" />
+          <StoreIcon className="mr-2 h-6 w-6" />
           <span className="inline-flex whitespace-nowrap overflow-hidden">
             {currentStore?.label}
           </span>
@@ -63,9 +63,9 @@ export default function StoreSwitcher({ items = [] }: StoreSwitcherProps) {
             <DropdownMenuItem
               key={store.value}
               onSelect={() => onStoreSelect(store)}
-              className={cn("text-md")}
+              className={cn("text-lg")}
             >
-              <StoreIcon className="mr-2 h-4 w-4" />
+              <StoreIcon className="mr-2 h-5 w-5" />
               {store.label}
               {selectedStore === store.value && (
                 <Check className="ml-auto h-5 w-5" />
@@ -78,7 +78,7 @@ export default function StoreSwitcher({ items = [] }: StoreSwitcherProps) {
             className={cn("text-md")}
           >
             New Store
-            <PlusCircleIcon className="ml-auto h-5 w-5"/>
+            <PlusCircleIcon className="ml-auto h-6 w-6"/>
           </DropdownMenuItem>
         </div>
       </DropdownMenuContent>
