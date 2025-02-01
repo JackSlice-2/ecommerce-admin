@@ -3,6 +3,9 @@
 import { ColumnDef } from "@tanstack/react-table"
 import { CellAction } from "./cell-action"
 import Image from "next/image"
+import { CheckCircle } from "lucide-react"
+import { XCircle } from "lucide-react"
+import Link from "next/link"
 
 export type InfoColumn = {
   id: string
@@ -53,20 +56,60 @@ export const columns: ColumnDef<InfoColumn>[] = [
   },{
     accessorKey: "phonenumber",
     header: "Phone Number",
+    cell: ({ row }) => {
+      return (
+        <Link href={`tel:${row.original.phonenumber}`}
+          className="hover:underline">
+          {row.original.phonenumber}
+        </Link>
+      )
+    }
   },{
     accessorKey: "whatsapp",
     header: "WhatsApp",
+    cell: ({ row }) => {
+      return (
+        <Link href={`${row.original.whatsapp}`}
+          className="hover:underline">
+          {row.original.whatsapp.split("=")[1]}
+        </Link>
+      )
+    }
   },{
     accessorKey: "instagram",
     header: "Instagram",
+    cell: ({ row }) => {
+      return (
+        <Link href={`${row.original.instagram}`}
+          className="hover:underline">
+          {row.original.instagram.split(".com/")[1]}
+        </Link>
+      )
+    }
   },
   {
     accessorKey: "facebook",
     header: "Facebook",
+    cell: ({ row }) => {
+      return (
+        <Link href={`${row.original.facebook}`}
+          className="hover:underline">
+          {row.original.facebook.split(".com/")[1]}
+        </Link>
+      )
+    }
   },
   {
     accessorKey: "email",
     header: "E-Mail",
+    cell: ({ row }) => {
+      return (
+        <Link href={`mailto:${row.original.email}?subject=${encodeURIComponent("Teste")}&body=${encodeURIComponent("Link do Email Funcionando!")}`}
+          className="hover:underline">
+          {row.original.email}
+        </Link>
+      )
+    }
   },
   {
     accessorKey: "footerText",
@@ -101,39 +144,45 @@ export const columns: ColumnDef<InfoColumn>[] = [
     header: "Light Mode Secondary Color",
   },*/
   {
-    accessorKey: "visa",
-    header: "Visa",
-  },
-  {
-    accessorKey: "mastercard",
-    header: "Mastercard",
-  },
-  {
-    accessorKey: "amex",
-    header: "Amex",
-  },
-  {
-    accessorKey: "hipercard",
-    header: "Hipercard",
-  },
-  {
-    accessorKey: "elo",
-    header: "Elo",
-  },
-  {
-    accessorKey: "pix",
-    header: "Pix",
-  },
-  {
-    accessorKey: "paypal",
-    header: "Paypal",
-  },
-  {
-    accessorKey: "stripe",
-    header: "Stripe",
+    id: "paymentMethods",
+    header: "Payment Methods",
+    cell: ({ row }) => {
+      const paymentMethods = [
+        { name: "Visa", value: row.original.visa, image: '/visa.svg'},
+        { name: "Mastercard", value: row.original.mastercard, image: '/mastercard.svg'},
+        { name: "Amex", value: row.original.amex, image: '/amex.svg'},
+        { name: "Hipercard", value: row.original.hipercard, image: '/hipercard.svg'},
+        { name: "Elo", value: row.original.elo, image: '/elo.png'},
+        { name: "Pix", value: row.original.pix, image: '/pix.webp'},
+        { name: "Stripe", value: row.original.stripe, image: '/stripe.svg'},
+      ];
+      return (
+        <div className="grid grid-cols-2 gap-2">
+        {paymentMethods.map((method) => (
+          method.value === true ? (
+            <div key={method.name} className="flex items-center justify-center">
+              <Image src={method.image} alt={method.name} width={50} height={50} />
+            </div>
+          ) : null
+        ))}
+      </div>
+      );
+    },
   },
   {
     accessorKey: "createdAt",
     header: "Date",
+    cell: ({ row }) => {{
+      return (
+        <>
+          <p>
+            {row.original.createdAt.split(",")[0]}
+          </p>
+          <p className="text-end">
+            {row.original.createdAt.split(",")[1]}
+          </p>
+        </>
+        )
+    }}
   }
 ]
