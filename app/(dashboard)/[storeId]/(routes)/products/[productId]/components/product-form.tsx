@@ -24,6 +24,7 @@ import { AlertModal } from "@/components/modals/alert-modal";
 import ImageUpload from "@/components/ui/image-upload";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
+import { StringDecoder } from "string_decoder";
 
 const formSchema = z.object({
     name: z.string().min(1),
@@ -44,8 +45,8 @@ type ProductFormValues = z.infer<typeof formSchema>;
 interface ProductFormProps {
     initialData: Product & {
         images: Image[]
-        colors: Color[]
-        sizes: Size[]
+        colors: String[]
+        sizes: String[]
 } | null;
    categories: Category[];
    colors: Color[];
