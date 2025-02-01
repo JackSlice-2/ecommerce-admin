@@ -46,7 +46,7 @@ const Navbar: React.FC<NavbarProps> = ({
       </div>
       {isMobileMenuOpen && (
         <div className="lg:hidden overflow-x-hidden">
-          <MainNav className="bg-background h-full w-full z-50 text-center absolute overflow-x-hidden " />
+          <MainNav onClick={toggleMobileMenu} className="bg-background h-full w-full z-50 text-center absolute overflow-x-hidden " />
         </div>
       )}
     </div>

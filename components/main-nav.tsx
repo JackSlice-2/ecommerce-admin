@@ -7,6 +7,7 @@ import React from "react";
 
 export function MainNav({
     className,
+    onClick
 }: React.HTMLAttributes<HTMLElement>) {
     const pathname = usePathname();
     const params = useParams();
@@ -62,6 +63,7 @@ export function MainNav({
             <Link
             key={route.href}
             href={route.href}
+            onClick={onClick}
             className={cn(
                 "text-xl lg:text-md transition-colors hover:bg-slate-800 rounded-xl py-3 font-semibold hover:text-primary px-4",
                 route.active ? "text-black dark:text-white" : "text-muted-foreground"
