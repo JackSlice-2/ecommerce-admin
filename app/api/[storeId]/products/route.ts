@@ -120,12 +120,10 @@ export async function GET(
         const colorId = searchParams.get("colorId") || undefined;
         const sizeId = searchParams.get("sizeId") || undefined;
         const isFeatured = searchParams.get("isFeatured");
-        const colors = searchParams.get("colors") ? searchParams.get("colors")?.split(",") : undefined;
-        const sizes = searchParams.get("sizes") ? searchParams.get("sizes")?.split(",") : undefined;
+        const colors = searchParams.get("colors") ? searchParams.get("colors")?.split(",") : [];
+        const sizes = searchParams.get("sizes") ? searchParams.get("sizes")?.split(",") : [];
         const inStock = searchParams.get("inStock") ? parseInt(searchParams.get("inStock")!) : 0;
         
-
-
         if (!params.storeId) {
             return new NextResponse("Store ID is required", { status: 400 });
         }
@@ -135,12 +133,12 @@ export async function GET(
             storeId: params.storeId,
             categoryId,
             colorId,
-            sizeId,
-            colors: colors ? { hasSome: colors } : undefined,
-            sizes: sizes ? { hasSome: sizes } : undefined,
-            inStock,
+            sizeId: sizeId || undefined,
+            colors: colors?.length ? { hasSome: colors } : undefined,
+            sizes: sizes?.length ? { hasSome: sizes } : undefined,
+            inStock: inStock ? inStock : 0,
             isFeatured: isFeatured ? true : undefined,
-            isArchived: false
+            isArchived: false,
         },
         include: {
             images: true,
