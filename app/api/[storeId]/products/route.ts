@@ -136,7 +136,7 @@ export async function GET(
             sizeId: sizeId || undefined,
             colors: colors?.length ? { hasSome: colors } : undefined,
             sizes: sizes?.length ? { hasSome: sizes } : undefined,
-            inStock: inStock ? inStock : 0,
+            inStock: inStock ? { gte: 1 } : undefined,
             isFeatured: isFeatured ? true : undefined,
             isArchived: false,
         },
